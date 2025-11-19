@@ -1,0 +1,206 @@
+/* Executive Details Specific Styles */
+.exec-section-title {
+    color: var(--section-title-color);
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  .boxes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 0 20px;
+    margin: 0 auto;
+    max-width: 1400px;
+  }
+  
+  .box1 {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: var(--text-color);
+  }
+  
+  .box1:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+  }
+  
+  .avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 3px solid var(--primary-color);
+  }
+  
+  .text-content {
+    width: 100%;
+  }
+  
+  .field-label {
+    font-size: 12px;
+    color: var(--meeting-time);
+    margin-top: 5px;
+    display: block;
+  }
+  
+  .field-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  /* Table Styles */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0 20px;
+    margin: 0 auto;
+    max-width: 1400px;
+  }
+  
+  .people-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    box-shadow: var(--box-shadow);
+  }
+  
+  .people-table th, 
+  .people-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .people-table th {
+    background-color: var(--sidebar-bg);
+    color: white;
+    font-weight: 600;
+  }
+  
+  .people-table tr:hover {
+    background-color: var(--meeting-card-hover);
+  }
+  
+  .avatar-small {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+  }
+  
+  /* Filter Buttons */
+  .filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    padding: 0 20px;
+    flex-wrap: wrap;
+  }
+  
+  .filter-buttons button {
+    background: var(--primary-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    font-weight: 500;
+  }
+  
+  .filter-buttons button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+  }
+  
+  .filter-buttons button.active {
+    background: var(--secondary-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .view-toggle-btn {
+    background: var(--sidebar-bg) !important;
+  }
+  
+  /* Pagination */
+  .invoice-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 30px 0;
+    color: var(--text-color);
+  }
+  
+  .invoice-page-nav {
+    padding: 8px 16px;
+    background: var(--primary-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* color: white; */
+  }
+  
+  .invoice-page-nav:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .boxes-container {
+      grid-template-columns: 1fr;
+      padding: 0 15px;
+    }
+    
+    .filter-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .people-table {
+      font-size: 14px;
+    }
+    
+    .people-table th, 
+    .people-table td {
+      padding: 8px 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .exec-section-title {
+      font-size: 20px;
+    }
+    
+    .box1 {
+      padding: 15px;
+    }
+    
+    .avatar {
+      width: 80px;
+      height: 80px;
+    }
+  }

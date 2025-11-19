@@ -1,0 +1,736 @@
+
+
+:root {
+  /* Light Theme Defaults */
+  --bg-color: #f9fafb;
+  --card-bg: #ffffff;
+  --text-color: #111827;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --primary-color: #6366f1;
+  --primary-hover: #4f46e5;
+  --secondary-color: #818cf8;
+  --accent-color: #8b5cf6;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --info-color: #3b82f6;
+  
+  /* Component Specific */
+  --input-bg: #f9fafb;
+  --input-border: #d1d5db;
+  --input-focus: #a5b4fc;
+  --tab-inactive: #f3f4f6;
+  --tab-active: #6366f1;
+  --btn-text: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+  --table-header: #f9fafb;
+}
+
+[data-theme="dark"] {
+  /* Dark Theme Overrides */
+  --bg-color: #1f2937;
+  --card-bg: #111827;
+  --text-color: #f9fafb;
+  --text-secondary: #9ca3af;
+  --border-color: #374151;
+  --primary-color: #818cf8;
+  --primary-hover: #6366f1;
+  --secondary-color: #a78bfa;
+  --accent-color: #c084fc;
+  
+  /* Component Specific */
+  --input-bg: #1f2937;
+  --input-border: #4b5563;
+  --input-focus: #818cf8;
+  --tab-inactive: #374151;
+  --tab-active: #818cf8;
+  --btn-text: #f9fafb;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --table-header: #1f2937;
+}
+
+/* BASE STYLES */
+.admin-settings {
+  width: 100%;
+  background: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+/* Sidebar State Adjustments */
+body.sidebar-expanded .admin-settings {
+  margin-left: 150px;
+  width: calc(100% - 250px);
+  padding-left: 0;
+}
+
+body.sidebar-collapsed .admin-settings {
+  margin-left: 80px;
+  width: calc(100% - 80px);
+  padding-left: 1.5rem;
+}
+
+/* HEADER STYLES */
+.settings-header {
+  padding-left: 0;
+  margin-left: -0.5rem; 
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.settings-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* TAB NAVIGATION */
+.settings-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.settings-tabs button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  background: var(--tab-inactive);
+  color: var(--text-color);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.settings-tabs button:hover {
+  background: var(--primary-color);
+  color: var(--btn-text);
+}
+
+.settings-tabs button.active {
+  background: var(--tab-active);
+  color: var(--btn-text);
+}
+
+/* MAIN CONTENT CARD */
+.settings-card {
+  background: var(--card-bg);
+  padding: 2.5rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px var(--shadow-color);
+  border: 1px solid var(--border-color);
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.settings-card h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* ACCESS CONTROL SECTIONS */
+.access-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.access-section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.access-section h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* FORM STYLES */
+.profile-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 3rem;
+  row-gap: 2rem;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-group.full {
+  grid-column: span 2;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-color);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  font-size: 1rem;
+  background: var(--input-bg);
+  color: var(--text-color);
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-group small {
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Profile Picture Section */
+.profile-pic .pic-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.profile-pic img {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  object-fit: cover;
+  border: 2px solid var(--border-color);
+}
+
+.pic-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.pic-actions button {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  background: var(--border-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pic-actions button:hover {
+  background: var(--primary-color);
+  color: var(--btn-text);
+}
+
+/* BUTTON STYLES */
+.save-btn, 
+.primary-btn {
+  background-color: var(--primary-color);
+  color: var(--btn-text);
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.save-btn:hover,
+.primary-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.mini-btn {
+  background-color: var(--border-color);
+  color: var(--text-color);
+  font-size: 0.85rem;
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mini-btn:hover {
+  background-color: var(--primary-color);
+  color: var(--btn-text);
+}
+
+
+/* Lists */
+.team-list,
+.integration-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.team-list li span {
+  min-width: 150px; /* or use flex: 1 for equal spacing */
+  white-space: nowrap;
+}
+.team-list li,
+.integration-list li {
+  padding: 0.8rem 0;
+  font-size: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Tables */
+.billing-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.billing-table th,
+.billing-table td {
+  padding: 0.8rem;
+  border: 1px solid var(--border-color);
+  text-align: left;
+  color: var(--text-color);
+}
+
+.billing-table th {
+  background: var(--table-header);
+  font-weight: 600;
+}
+
+/* RESPONSIVE ADJUSTMENTS */
+@media (min-width: 1200px) {
+  body.sidebar-expanded .admin-settings {
+    margin-left: 20px;
+    width: calc(100% - 20px);
+    padding-left: 0.1rem;
+    padding-right: 1.5rem;
+  }
+  
+  body.sidebar-collapsed .admin-settings {
+    margin-left: 10px;
+    width: calc(100% - 10px);
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .admin-settings {
+    padding: 2rem;
+  }
+  
+  .settings-card {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  body.sidebar-expanded .admin-settings {
+    margin-left: 20px;
+    width: calc(100% - 20px);
+    padding-left: 0.1rem;
+    padding-right: 1.5rem;
+  }
+  
+  body.sidebar-collapsed .admin-settings {
+    margin-left: 10px;
+    width: calc(100% - 10px);
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .admin-settings {
+    padding: 2rem;
+  }
+  
+  .settings-card {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 992px) {
+  body.sidebar-expanded .admin-settings {
+    margin-left: 20px;
+    width: calc(100% - 20px);
+    padding-left: 0.1rem;
+    padding-right: 1.5rem;
+  }
+  
+  body.sidebar-collapsed .admin-settings {
+    margin-left: 10px;
+    width: calc(100% - 10px);
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .sidebar-toggle-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-toggle-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+    padding: 0.6rem;
+  }
+
+  .admin-settings {
+    padding: 1.5rem;
+  }
+  
+  .settings-card {
+    padding: 1.5rem;
+  }
+  
+  .settings-tabs {
+    gap: 0.5rem;
+  }
+  
+  .settings-tabs button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    flex: 1 1 120px;
+  }
+  
+  .profile-pic .pic-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .pic-actions {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-settings {
+    padding: 1rem;
+  }
+  
+  .settings-card {
+    padding: 1rem;
+  }
+  
+  .settings-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .settings-card h3 {
+    font-size: 1.2rem;
+  }
+  
+  .pic-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .pic-actions button {
+    width: 100%;
+  }
+  
+  .billing-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* Access Control Table Styles */
+.access-control-table {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: flex;
+  background-color: var(--table-header);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header-cell {
+  flex: 1;
+  padding: 1rem;
+  text-align: center;
+}
+
+.header-cell:first-child {
+  flex: 2;
+  text-align: left;
+}
+
+.table-row {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.row-cell {
+  flex: 1;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row-cell.functionality {
+  flex: 2;
+  justify-content: flex-start;
+  font-weight: 500;
+}
+
+/* Toggle Switch Styles */
+/* Functionality Group Styles */
+.functionality-group {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.functionality-group:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.group-title {
+  padding: 0.75rem 1rem;
+  background-color: var(--table-header);
+  font-weight: 600;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Toggle Switch Component */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.toggle-switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.toggle-switch input:checked + .slider {
+  background-color: var(--primary-color);
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+  /* center icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+}
+
+.slider:before {
+  display: none;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
+
+/* input:checked + .slider:before {
+  transform: translateX(26px);
+} */
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .header-cell, .row-cell {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .toggle-switch {
+    width: 40px;
+    height: 20px;
+  }
+  
+  .slider:before {
+    height: 14px;
+    width: 14px;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(20px);
+  }
+}
+
+/*-------------------Blur overlay-------------------*/
+.blur-overlay-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 300px; /* ensures visual height even if content is short */
+}
+
+.blur-overlay-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  backdrop-filter: blur(4px);
+  background-color: rgba(255, 255, 255, 0.6); /* for light mode */
+  z-index: 2;
+  pointer-events: all;
+  border-radius: 12px;
+}
+
+.blur-overlay-wrapper.dark::after {
+  background-color: rgba(31, 41, 55, 0.4); /* for dark mode */
+}
+.blur-overlay-wrapper.dark::after {
+  background-color: rgba(31, 41, 55, 0.5);
+}
+/* Fix dark mode text visibility only for settings page */
+[data-theme="dark"] .admin-settings h3,
+[data-theme="dark"] .admin-settings h2,
+[data-theme="dark"] .admin-settings label,
+[data-theme="dark"] .admin-settings input,
+[data-theme="dark"] .admin-settings textarea,
+[data-theme="dark"] .admin-settings select,
+[data-theme="dark"] .admin-settings button,
+[data-theme="dark"] .admin-settings small,
+[data-theme="dark"] .admin-settings .form-group,
+[data-theme="dark"] .admin-settings .row-cell,
+[data-theme="dark"] .admin-settings .header-cell,
+[data-theme="dark"] .admin-settings .group-title,
+[data-theme="dark"] .admin-settings .mini-btn,
+[data-theme="dark"] .admin-settings .save-btn,
+[data-theme="dark"] .admin-settings .primary-btn {
+  color: whitesmoke !important;
+}
+
+/* Make action buttons inside profile image section dark-safe */
+[data-theme="dark"] .admin-settings .pic-actions button {
+  color: black !important;
+}
+
+/* Make form input text black inside settings in dark mode */
+[data-theme="dark"] .admin-settings .form-group input {
+  color: #fff !important;
+}
+[data-theme="dark"] .admin-settings input::placeholder,
+[data-theme="dark"] .admin-settings textarea::placeholder {
+  color: #adb0b2; /* soft light gray for dark background */
+}
+
+/* Improve input field contrast */
+[data-theme="dark"] .admin-settings input,
+[data-theme="dark"] .admin-settings textarea,
+[data-theme="dark"] .admin-settings select {
+  background-color: rgba(74, 85, 104, 0.8);
+  border-color: var(--input-border);
+}
+
+/* Improve hover state of mini buttons */
+[data-theme="dark"] .admin-settings .mini-btn:hover {
+  background-color: var(--primary-color);
+  color: var(--btn-text);
+}
+
+

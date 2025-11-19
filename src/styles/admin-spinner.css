@@ -1,0 +1,85 @@
+/* Spinner Overlay (Light by default) */
+.admin-spinner-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 20; /* High, but below modals */
+}
+
+/* Dark Mode Support */
+:root[data-theme="dark"] .admin-spinner-overlay {
+  background: rgba(0, 0, 0, 0.6); /* softer dark background */
+  backdrop-filter: blur(6px);
+}
+
+/* Spinner Container */
+.admin-spinner-container {
+  border-radius: 50%;
+  height: 96px;
+  width: 96px;
+  animation: rotate_3922 1.2s linear infinite;
+  background-color: #9b59b6;
+  background-image: linear-gradient(#9b59b6, #84cdfa, #5ad1cd);
+  position: relative;
+}
+
+/* Spinner Layers */
+.admin-spinner-container span {
+  position: absolute;
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+  background-color: #9b59b6;
+  background-image: linear-gradient(#9b59b6, #84cdfa, #5ad1cd);
+}
+
+.admin-spinner-container span:nth-of-type(1) {
+  filter: blur(5px);
+}
+.admin-spinner-container span:nth-of-type(2) {
+  filter: blur(10px);
+}
+.admin-spinner-container span:nth-of-type(3) {
+  filter: blur(25px);
+}
+.admin-spinner-container span:nth-of-type(4) {
+  filter: blur(50px);
+}
+
+.admin-spinner-container::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  background-color: #fff;
+  border: solid 5px #ffffff;
+  border-radius: 50%;
+}
+
+.admin-spinner-text {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Text color in dark theme */
+:root[data-theme="dark"] .admin-spinner-text {
+  color: #f0f0f0;
+}
+
+@keyframes rotate_3922 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

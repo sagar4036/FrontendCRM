@@ -1,0 +1,74 @@
+.template-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fefefe;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .template-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: center;
+    color: #333;
+  }
+  
+  .template-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .template-input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100%;
+  }
+  
+  .template-textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: inherit;
+    resize: vertical;
+  }
+  
+  .template-button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .template-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .template-container {
+      padding: 15px;
+    }
+  
+    .template-title {
+      font-size: 20px;
+    }
+  
+    .template-button {
+      font-size: 15px;
+    }
+  }
+  
+  

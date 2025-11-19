@@ -1,0 +1,667 @@
+/* executiveTracker.css with theme-based light/dark support */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+.activity-tracker-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  top: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+.tracker-widget {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px var(--shadow-light);
+  width: 340px;
+  height: 80vh;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.tracker-header {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tracker-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Inter 'sans-serif';
+}
+
+
+.tracker-content {
+  padding: 16px;
+}
+
+.time-display {
+  margin-bottom: 16px;
+}
+
+.time-block {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 8px;
+  background-color: var(--input-bg);
+  border-radius: 4px;
+}
+
+.time-block.break-time {
+  background-color: rgba(255, 0, 0, 0.05);
+}
+
+.time-block.call-time {
+  background-color: rgba(0, 255, 0, 0.05);
+}
+
+.time-label {
+  font-weight: 500;
+  color: var(--text-color);
+}
+.summary-text {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Inter 'sans-serif';
+}
+.time-value {
+  font-family: monospace;
+  font-size: 16px;
+}
+
+.tracker-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  margin-top: 40px;
+}
+
+.tracker-btn {
+  flex: 1;
+  padding: 8px;
+  border:none;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #90caf9, #42a5f5);
+  color: white;
+  color: white;
+  color: var(--accent-color);
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.tracker-btn:hover:not(:disabled) {
+  background-color: var(--card-bg);
+}
+
+.tracker-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.tracker-btn.active {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.lead-input {
+  margin-top: 12px;
+}
+
+.lead-input input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+}
+
+.lead-input input:disabled {
+  background-color: var(--bg-color);
+  cursor: not-allowed;
+}
+
+.update-note {
+  margin-top: 12px;
+  text-align: center;
+  color: var(--text-color);
+  font-size: 12px;
+}
+
+.exec-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 8px;
+  background-color: var(--input-bg);
+  border-radius: 6px;
+}
+
+.exec-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+   background: linear-gradient(135deg, #90caf9, #42a5f5);
+  color: white;
+  display: flex;
+  align-items: center;
+  color: white;
+  justify-content: center;
+}
+
+.exec-details {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.execu-name {
+  font-weight: 600;
+}
+
+.exec-id {
+  font-size: 12px;
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+.exec-status-badge {  
+  margin-bottom: 16px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--card-bg);
+  color: var(--accent-color);
+  display: inline-block;
+}
+
+.daily-summary {
+  margin-top: 20px;
+  background-color: var(--card-bg);
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.daily-summary h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.daily-summary ul {
+  list-style: none;
+  padding-left: 0;
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+.daily-summary li {
+  margin-bottom: 4px;
+}
+
+.motivation-box {
+  margin-top: 20px;
+  background-color: rgba(97, 197, 155, 0.2);
+  padding: 12px;
+  border-left: 4px solid #33ae73;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text-color);
+}
+
+.motivation-box blockquote {
+  margin: 0;
+  font-style: italic;
+}
+
+
+
+/*------------------------------------Dark Theme-------------------------------*/
+[data-theme="dark"] .tracker-widget {
+  background-color: #2a2a2a;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .tracker-header {
+  background: linear-gradient(135deg, #1a1a1a, #404040);
+}
+
+[data-theme="dark"] .tracker-header h3 {
+  color: white;
+}
+
+[data-theme="dark"] .tracker-btn {
+  background: linear-gradient(135deg, #1a1a1a, #404040);
+  color: white;
+}
+
+[data-theme="dark"] .exec-avatar {
+  background: linear-gradient(135deg, #1a1a1a, #404040);
+}
+
+[data-theme="dark"] .motivation-box {
+  background-color: rgba(64, 64, 64, 0.3);
+  border-left: 4px solid #404040;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .time-block {
+  background-color: #383838;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .daily-summary {
+  background-color: #383838;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .exec-status-badge {
+  background-color: #383838;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .lead-input input {
+  background-color: #383838;
+  border: 1px solid #404040;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .exec-info {
+  background-color: #383838;
+}
+
+/*------------------------------------Red Theme-------------------------------*/
+[data-theme="red"] .tracker-widget {
+  background: #fdedf5;
+  color: #333333;
+}
+
+[data-theme="red"] .motivation-box {
+  border-left: 4px solid #d63384;
+  background-color: rgba(214, 51, 132, 0.15);
+  color: #333333;
+}
+
+[data-theme="red"] .exec-avatar {
+  background: linear-gradient(135deg, #d63384, #b02a5b);
+}
+
+[data-theme="red"] .tracker-header {
+  background: linear-gradient(135deg, #d63384, #b02a5b);
+}
+
+[data-theme="red"] .tracker-btn {
+  background: linear-gradient(135deg, #d63384, #b02a5b);
+  color: white;
+}
+
+[data-theme="red"] .tracker-header h3 {
+  color: white;
+}
+
+[data-theme="red"] .time-block {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="red"] .daily-summary {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="red"] .exec-status-badge {
+  background-color: #ffffff;
+  color: #d63384;
+}
+
+[data-theme="red"] .lead-input input {
+  background-color: #ffffff;
+  border: 1px solid #d63384;
+  color: #333333;
+}
+
+[data-theme="red"] .exec-info {
+  background-color: #ffffff;
+}
+
+/*------------------------------------Blue Theme-------------------------------*/
+[data-theme="blue"] .tracker-widget {
+  background: #e3f2fd;
+  color: #333333;
+}
+
+[data-theme="blue"] .tracker-header {
+  background: linear-gradient(135deg, #1976d2, #0d47a1);
+}
+
+[data-theme="blue"] .tracker-header h3 {
+  color: white;
+}
+
+[data-theme="blue"] .tracker-btn {
+  background: linear-gradient(135deg, #1976d2, #0d47a1);
+  color: white;
+}
+
+[data-theme="blue"] .exec-avatar {
+  background: linear-gradient(135deg, #1976d2, #0d47a1);
+}
+
+[data-theme="blue"] .motivation-box {
+  border-left: 4px solid #1976d2;
+  background-color: rgba(25, 118, 210, 0.15);
+  color: #333333;
+}
+
+[data-theme="blue"] .time-block {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="blue"] .daily-summary {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="blue"] .exec-status-badge {
+  background-color: #ffffff;
+  color: #1976d2;
+}
+
+[data-theme="blue"] .lead-input input {
+  background-color: #ffffff;
+  border: 1px solid #1976d2;
+  color: #333333;
+}
+
+[data-theme="blue"] .exec-info {
+  background-color: #ffffff;
+}
+
+/*------------------------------------Brown Theme-------------------------------*/
+[data-theme="brown"] .tracker-widget {
+  background-color: #f5f1eb;
+  color: #333333;
+}
+
+[data-theme="brown"] .tracker-header {
+  background: linear-gradient(135deg, #8d6e63, #5d4037);
+}
+
+[data-theme="brown"] .tracker-header h3 {
+  color: white;
+}
+
+[data-theme="brown"] .tracker-btn {
+  background: linear-gradient(135deg, #8d6e63, #5d4037);
+  color: white;
+}
+
+[data-theme="brown"] .exec-avatar {
+  background: linear-gradient(135deg, #8d6e63, #5d4037);
+}
+
+[data-theme="brown"] .motivation-box {
+  background-color: rgba(141, 110, 99, 0.15);
+  border-left: 4px solid #8d6e63;
+  color: #333333;
+}
+
+[data-theme="brown"] .time-block {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="brown"] .daily-summary {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="brown"] .exec-status-badge {
+  background-color: #ffffff;
+  color: #8d6e63;
+}
+
+[data-theme="brown"] .lead-input input {
+  background-color: #ffffff;
+  border: 1px solid #8d6e63;
+  color: #333333;
+}
+
+[data-theme="brown"] .exec-info {
+  background-color: #ffffff;
+}
+
+/*------------------------------------Green Theme-------------------------------*/
+[data-theme="green"] .tracker-widget {
+  background-color: #e8f5e8;
+  color: #333333;
+}
+
+[data-theme="green"] .tracker-header {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+}
+
+[data-theme="green"] .tracker-header h3 {
+  color: white;
+}
+
+[data-theme="green"] .tracker-btn {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: white;
+}
+
+[data-theme="green"] .exec-avatar {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+}
+
+[data-theme="green"] .motivation-box {
+  background-color: rgba(76, 175, 80, 0.15);
+  border-left: 4px solid #4caf50;
+  color: #333333;
+}
+
+[data-theme="green"] .time-block {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="green"] .daily-summary {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="green"] .exec-status-badge {
+  background-color: #ffffff;
+  color: #4caf50;
+}
+
+[data-theme="green"] .lead-input input {
+  background-color: #ffffff;
+  border: 1px solid #4caf50;
+  color: #333333;
+}
+
+[data-theme="green"] .exec-info {
+  background-color: #ffffff;
+}
+
+/*------------------------------------Lavender Theme-------------------------------*/
+[data-theme="lavender"] .tracker-widget {
+  background-color: #f3f0ff;
+  color: #333333;
+}
+
+[data-theme="lavender"] .tracker-header {
+  background: linear-gradient(135deg, #9c88ff, #6b46c1);
+}
+
+[data-theme="lavender"] .tracker-header h3 {
+  color: white;
+}
+
+[data-theme="lavender"] .tracker-btn {
+  background: linear-gradient(135deg, #9c88ff, #6b46c1);
+  color: white;
+}
+
+[data-theme="lavender"] .exec-avatar {
+  background: linear-gradient(135deg, #9c88ff, #6b46c1);
+}
+
+[data-theme="lavender"] .motivation-box {
+  background-color: rgba(156, 136, 255, 0.15);
+  border-left: 4px solid #9c88ff;
+  color: #333333;
+}
+
+[data-theme="lavender"] .time-block {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="lavender"] .daily-summary {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="lavender"] .exec-status-badge {
+  background-color: #ffffff;
+  color: #9c88ff;
+}
+
+[data-theme="lavender"] .lead-input input {
+  background-color: #ffffff;
+  border: 1px solid #9c88ff;
+  color: #333333;
+}
+
+[data-theme="lavender"] .exec-info {
+  background-color: #ffffff;
+}
+
+/*------------------------------------Ocean Theme-------------------------------*/
+[data-theme="ocean"] .tracker-widget {
+  background-color: #e1f4fd;
+  color: #333333;
+}
+
+[data-theme="ocean"] .tracker-header {
+  background: linear-gradient(135deg, #0ea5e9, #0369a1);
+}
+
+[data-theme="ocean"] .tracker-header h3 {
+  color: white;
+}
+
+[data-theme="ocean"] .tracker-btn {
+  background: linear-gradient(135deg, #0ea5e9, #0369a1);
+  color: white;
+}
+
+[data-theme="ocean"] .exec-avatar {
+  background: linear-gradient(135deg, #0ea5e9, #0369a1);
+}
+
+[data-theme="ocean"] .motivation-box {
+  background-color: rgba(14, 165, 233, 0.15);
+  border-left: 4px solid #0ea5e9;
+  color: #333333;
+}
+
+[data-theme="ocean"] .time-block {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="ocean"] .daily-summary {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="ocean"] .exec-status-badge {
+  background-color: #ffffff;
+  color: #0ea5e9;
+}
+
+[data-theme="ocean"] .lead-input input {
+  background-color: #ffffff;
+  border: 1px solid #0ea5e9;
+  color: #333333;
+}
+
+[data-theme="ocean"] .exec-info {
+  background-color: #ffffff;
+}
+
+/*------------------------------------Peach Theme-------------------------------*/
+[data-theme="peach"] .tracker-widget {
+  background-color: #fef7f0;
+  color: #333333;
+}
+
+[data-theme="peach"] .tracker-header {
+  background: linear-gradient(135deg, #ff8a65, #d84315);
+}
+
+[data-theme="peach"] .tracker-header h3 {
+  color: white;
+}
+
+[data-theme="peach"] .tracker-btn {
+  background: linear-gradient(135deg, #ff8a65, #d84315);
+  color: white;
+}
+
+[data-theme="peach"] .exec-avatar {
+  background: linear-gradient(135deg, #ff8a65, #d84315);
+}
+
+[data-theme="peach"] .motivation-box {
+  background-color: rgba(255, 138, 101, 0.15);
+  border-left: 4px solid #ff8a65;
+  color: #333333;
+}
+
+[data-theme="peach"] .time-block {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="peach"] .daily-summary {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="peach"] .exec-status-badge {
+  background-color: #ffffff;
+  color: #ff8a65;
+}
+
+[data-theme="peach"] .lead-input input {
+  background-color: #ffffff;
+  border: 1px solid #ff8a65;
+  color: #333333;
+}
+
+[data-theme="peach"] .exec-info {
+  background-color: #ffffff;
+}

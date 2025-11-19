@@ -1,0 +1,251 @@
+/* Verify Component Styles */
+.verify-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .verify-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .verify-header {
+    margin-bottom: 32px;
+  }
+  
+  .verify-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 12px 0;
+  }
+  
+  .verify-subtitle {
+    font-size: 16px;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  .verify-form {
+    margin-bottom: 24px;
+  }
+  
+  .otp-container {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  
+  .otp-input {
+    width: 48px;
+    height: 56px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    outline: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .otp-input:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+  }
+  
+  .otp-input-filled {
+    border-color: #3b82f6;
+    background-color: #f0f9ff;
+  }
+  
+  .otp-input-error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+  }
+  
+  .verify-error {
+    color: #ef4444;
+    font-size: 14px;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  
+  .submit-button {
+    width: 100%;
+    height: 48px;
+    background-color: #3b82f6;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .submit-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .submit-button:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  .submit-button-loading {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+  }
+  
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .verify-footer {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 24px;
+  }
+  
+  .resend-text {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+  }
+  
+  .resend-button {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: underline;
+    padding: 0;
+  }
+  
+  .countdown {
+    color: #9ca3af;
+    font-weight: 500;
+  }
+  
+  /* Success State Styles */
+  .success-icon {
+    width: 64px;
+    height: 64px;
+    background-color: #10b981;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0 auto 24px auto;
+  }
+  
+  .success-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 12px 0;
+  }
+  
+  .success-message {
+    font-size: 16px;
+    color: #6b7280;
+    margin: 0 0 32px 0;
+    line-height: 1.5;
+  }
+  
+  .continue-button {
+    width: 100%;
+    height: 48px;
+    background-color: #10b981;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .continue-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .continue-button:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  /* OTP Popup */
+  .otp-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .otp-popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    width: 100%;
+  }
+  
+  .otp-popup-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    background: #28a745;
+    color: white;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .otp-popup-content p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+  }

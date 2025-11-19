@@ -1,0 +1,722 @@
+/* Container */
+.crm-teams-container {
+  background: linear-gradient(135deg, #f8fafc, #ffffff);
+  padding: 1.5rem;
+  min-height: 100vh;
+  transition: background 0.3s ease;
+}
+
+.crm-teams-header {
+  margin-bottom: 2rem;
+}
+
+.crm-manager-detail {
+  color: #1e293b;
+}
+
+.crm-teams-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.crm-teams-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.crm-teams-subtitle {
+  color: #64748b;
+  font-size: 1.125rem;
+}
+
+/* Search and Filter Bar */
+.crm-search-filter-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.crm-search-container {
+  position: relative;
+  flex: 1;
+}
+
+.crm-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.crm-search-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 2px solid #808080;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem 0.75rem 3rem;
+  color: #1e293b;
+  transition: all 0.3s ease;
+}
+
+.crm-search-input::placeholder {
+  color: #9ca3af;
+}
+
+.crm-search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.crm-filter-select {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 2px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: #1e293b;
+  min-width: 150px;
+}
+
+.crm-filter-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.crm-filter-select option {
+  background: #f8fafc;
+  color: #1e293b;
+}
+
+/* Stats Grid */
+.crm-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.crm-stat-card {
+  background: rgba(237, 248, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  border-left: 4px solid #667eea;
+}
+
+.crm-stat-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.crm-stat-label {
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.crm-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.crm-icon-purple {
+  color: #c084fc;
+}
+
+.crm-icon-blue {
+  color: #60a5fa;
+}
+
+.crm-icon-yellow {
+  color: #fbbf24;
+}
+
+.crm-online-indicator {
+  width: 0.75rem;
+  height: 0.75rem;
+  background: #4ade80;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Teams Grid */
+.crm-teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Team Cards */
+.crm-team-card {
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  border: 1px solid #e2e8f0;
+  border-top: 4px solid #667eea;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  transform: scale(1);
+  box-shadow: 0 5px 7px rgba(102, 126, 234, 0.15);;
+}
+
+.crm-team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
+}
+
+/* Team Header */
+.crm-team-header {
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.crm-gradient-purple-pink {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+}
+
+.crm-gradient-blue-cyan {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+}
+
+.crm-gradient-green-emerald {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.crm-gradient-orange-red {
+  background: linear-gradient(135deg, #f97316, #dc2626);
+}
+
+.crm-team-header-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.crm-team-header-content {
+  position: relative;
+  z-index: 10;
+}
+
+.crm-team-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.crm-team-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.crm-team-menu-btn {
+  color: rgba(255, 255, 255, 0.8);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.crm-team-menu-btn:hover {
+  color: #ffffff;
+}
+
+.crm-team-description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.crm-team-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.crm-team-members-count {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.crm-team-icon {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.crm-team-members-text {
+  color: #ffffff;
+  font-size: 0.875rem;
+}
+
+.crm-team-performance {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.crm-performance-bar {
+  width: 4rem;
+  height: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.crm-performance-fill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 0.25rem;
+  transition: width 0.5s ease;
+}
+
+.crm-performance-text {
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Team Body */
+.crm-team-body {
+  padding: 1.5rem;
+}
+
+.crm-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Member Items */
+.crm-member-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.crm-member-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.crm-member-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.crm-member-avatar-container {
+  position: relative;
+}
+
+.crm-member-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(135deg, #c084fc, #f472b6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+}
+
+.crm-member-status {
+  position: absolute;
+  bottom: -0.25rem;
+  right: -0.25rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+}
+
+.crm-status-online {
+  background: #4ade80;
+}
+
+.crm-status-away {
+  background: #fbbf24;
+}
+
+.crm-status-offline {
+  background: #6b7280;
+}
+
+.crm-member-name {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.crm-member-role {
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.crm-member-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.crm-member-item:hover .crm-member-actions {
+  opacity: 1;
+}
+
+.crm-action-btn {
+  padding: 0.25rem;
+  color: #9ca3af;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.crm-action-btn:hover {
+  color: #1e293b;
+}
+
+/* Team Actions */
+.crm-team-actions {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(226, 232, 240, 0.1);
+}
+
+.crm-team-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.crm-btn-secondary {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+.crm-btn-view {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
+  color: #c084fc;
+}
+
+.crm-btn-view:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3));
+}
+
+.crm-btn-manage {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.2));
+  color: #60a5fa;
+}
+
+.crm-btn-manage:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(6, 182, 212, 0.3));
+}
+
+/* Floating Action Button */
+.crm-fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.crm-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 25px -3px rgba(102, 126, 234, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .crm-teams-container {
+    padding: 1rem;
+  }
+
+  .crm-teams-header-top {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .crm-search-filter-bar {
+    flex-direction: column;
+  }
+
+  .crm-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .crm-teams-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .crm-team-buttons {
+    flex-direction: column;
+  }
+}
+
+/* Animations */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes icon-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Member Item Animation */
+.crm-member-item {
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.crm-member-item:hover {
+  transform: translateY(-4px);
+}
+
+/* Card Animation */
+.crm-team-card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.crm-team-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 25px 50px -12px rgba(102, 126, 234, 0.3);
+}
+
+/* Icon Animations */
+.crm-action-btn {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.crm-action-btn:hover {
+  color: #1e293b;
+  transform: scale(1.2);
+}
+
+.crm-action-btn:hover svg {
+  animation: bounce 0.6s;
+}
+
+/* Stat Card Animation */
+.crm-stat-card {
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.crm-stat-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.98);
+}
+
+/* Animate stat icons */
+.crm-stat-icon {
+  transition: transform 0.4s ease;
+}
+
+.crm-stat-card:hover .crm-stat-icon {
+  animation: icon-pulse 1s infinite;
+}
+
+/* Dark Mode */
+[data-theme="dark"] .crm-teams-container {
+  background: linear-gradient(135deg, #1e1e2f, #2a2a3c);
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .crm-manager-detail {
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .crm-teams-title {
+  color: #ffffff;
+  background: linear-gradient(135deg, #667eea, #f093fb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="dark"] .crm-teams-subtitle {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .crm-search-input,
+[data-theme="dark"] .crm-filter-select {
+  background: linear-gradient(135deg, #33394f, #2a2a3c);
+  border: 2px solid #555;
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .crm-search-input::placeholder {
+  color: #9ca3af;
+}
+
+[data-theme="dark"] .crm-search-input:focus,
+[data-theme="dark"] .crm-filter-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.3);
+}
+
+[data-theme="dark"] .crm-filter-select option {
+  background: #33394f;
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .crm-stat-card {
+  background: linear-gradient(135deg, #33394f, #2a2a3c);
+  border: 1px solid #555;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .crm-stat-card:hover {
+  background: rgba(58, 58, 77, 0.3);
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
+}
+
+[data-theme="dark"] .crm-stat-label {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .crm-stat-value {
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .crm-team-card {
+  background: linear-gradient(135deg, #33394f, #2a2a3c);
+  border: 1px solid #555;
+  border-top: 4px solid #667eea;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .crm-team-card:hover {
+  background: rgba(58, 58, 77, 0.3);
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
+}
+
+[data-theme="dark"] .crm-member-item {
+  background: rgba(58, 58, 77, 0.3);
+}
+
+[data-theme="dark"] .crm-member-item:hover {
+  background: rgba(68, 68, 88, 0.4);
+}
+
+[data-theme="dark"] .crm-member-name {
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .crm-member-role {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .crm-team-description,
+[data-theme="dark"] .crm-team-members-text,
+[data-theme="dark"] .crm-performance-text {
+  color: #d1d5db;
+}
+
+[data-theme="dark"] .crm-team-icon {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .crm-team-menu-btn {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .crm-team-menu-btn:hover {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .crm-action-btn {
+  color: #9ca3af;
+}
+
+[data-theme="dark"] .crm-action-btn:hover {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .crm-fab {
+  background: linear-gradient(135deg, #667eea, #f093fb);
+  box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.4);
+}
+
+[data-theme="dark"] .crm-fab:hover {
+  box-shadow: 0 10px 25px -3px rgba(102, 126, 234, 0.5);
+}
+
+[data-theme="dark"] .crm-btn-view {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3));
+  color: #c084fc;
+}
+
+[data-theme="dark"] .crm-btn-view:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(236, 72, 153, 0.4));
+}
+
+[data-theme="dark"] .crm-btn-manage {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(6, 182, 212, 0.3));
+  color: #60a5fa;
+}
+
+[data-theme="dark"] .crm-btn-manage:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(6, 182, 212, 0.4));
+}
+
+[data-theme="dark"] .crm-team-actions {
+  border-top: 1px solid rgba(85, 85, 85, 0.3);
+}
+
+[data-theme="dark"] .crm-member-status {
+  border: 2px solid #2a2a3c;
+}

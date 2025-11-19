@@ -1,0 +1,171 @@
+.auth-wrapper.updated-ui {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background:#ccc;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+  
+  .auth-box.new-ui-card {
+    background: white;
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    width: 500px;
+    min-height: 600px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .auth-title {
+    color: #2e2369;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .input-group {
+    text-align: left;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .input-group input:focus {
+    border-color: #7f5af0;
+    box-shadow: 0 0 6px rgba(127, 90, 240, 0.3);
+    outline: none;
+  }
+  
+  .submit-btn.wide-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(to right, #8e2de2, #4a00e0);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.3s ease;
+  }
+  
+  .submit-btn.wide-btn:hover {
+    background: linear-gradient(to right, #4a00e0, #8e2de2);
+  }
+  
+  .footer-text {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .footer-text a {
+    color: #5a2dd8;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .auth-wrapper.updated-ui {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #ccc; /* Or replace with your preferred gradient */
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .auth-box.new-ui-card {
+    background: white;
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    width: 500px;
+    min-height: 600px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .auth-title {
+    color: #2e2369;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .input-group {
+    text-align: left;
+    margin-bottom: 1.5rem;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .input-group input:focus {
+    border-color: #7f5af0;
+    box-shadow: 0 0 6px rgba(127, 90, 240, 0.3);
+    outline: none;
+  }
+  
+  .submit-btn.wide-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(to right, #8e2de2, #4a00e0);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.3s ease;
+  }
+  
+  .submit-btn.wide-btn:hover {
+    background: linear-gradient(to right, #4a00e0, #8e2de2);
+  }
+  
+  .footer-text {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .footer-text a {
+    color: #5a2dd8;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  

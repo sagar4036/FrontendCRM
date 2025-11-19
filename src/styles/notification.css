@@ -1,0 +1,294 @@
+
+
+
+
+
+/* notification */
+.notification-page-wrapper {
+  display: flex;
+  flex-direction: row;
+  background-color: #f5f7fa;
+  min-height: 200px;
+}
+/* Hide scrollbar for Webkit (Chrome, Safari, Edge) */
+.notification-container::-webkit-scrollbar,
+.notification-content-area::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.notification-container,
+.notification-content-area {
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE and Edge */
+}
+
+/* Sidebar is handled inside SidebarandNavbar */
+.notification-sidebar {
+  width: 250px;
+}
+/* This is the full area beside sidebar */
+.notification-content-area {
+  flex: 1;
+  max-height: 100vh; /* Make it fit the viewport */
+  width: 2000px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+/* Actual card container inside the centered area */
+.notification-container {
+  width: 100vw;
+  min-height: 680px;
+  background-color: white;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+  
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: space-between; /* Push pagination to bottom */
+}
+
+/* Notification content styles */
+.notification-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-align: center;
+  color: #333;
+}
+.notification-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1; /* Allow list to grow and push pagination down */
+}
+
+[data-theme="dark"] .notification-content-area{
+  background-color: var(--bg-color);
+}
+[data-theme="dark"] .notification-container
+{
+     background-color: #212834;
+}
+[data-theme="dark"] .notification-container h2{
+  color: #ffff;
+}
+.notification-card {
+  background-color: #e7e7e7;
+  border-left: 5px solid #4a90e2;
+  padding: 15px;
+  border-radius: 8px;
+  transition: box-shadow 0.2s ease-in-out;
+  margin-bottom: 15px;
+}
+
+.notification-card:hover {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.notification-card.read {
+  background-color: #f0f2f5; /* Much lighter gray/blue */
+  color: #9ca3af; /* Dimmed text */
+  border-left: 5px solid #94a3b8; /* Lighter border to visually indicate it's read */
+}
+
+.read-checkbox input:checked {
+  accent-color: #3b82f6; /* Lighter blue for checked state */
+}
+
+.read-checkbox input:disabled {
+  cursor: not-allowed;
+}
+
+.read-checkbox {
+  font-size: 13px;
+  color: #007bff;
+}
+
+.read-checkbox input:checked + span {
+  color: #007bff;
+}
+
+.notification-message {
+  font-size: 14px;
+  color: #6b7280; /* Dim text for read notification */
+  line-height: 1.4;
+}
+
+.notification-header strong {
+  font-size: 16px;
+  color: #333;
+}
+.notification-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.notification-time {
+  font-size: 12px;
+  color: #555;
+}
+
+.read-checkbox {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+}
+
+.read-checkbox input {
+  margin-right: 4px;
+}
+.notification-message {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.4;
+}
+
+.empty-msg {
+  text-align: center;
+  color: #888;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 5px 5px;
+  border-top: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+  border-radius: 0 0 10px 10px;
+}
+
+.pagination-btn {
+  padding: 8px 16px;
+  margin: 0 5px;
+  background-color: #2563eb; /* Tailwind-style blue-600 */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #1e40af; /* blue-800 */
+  transform: translateY(-1px);
+}
+
+.pagination-btn:disabled {
+  background-color: #cbd5e1; /* slate-300 */
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-weight: 400;
+  margin: 0 10px;
+  color: #4b5563; /* gray-700 */
+}
+@media (min-width: 481px) and (max-width: 991px) {
+  .notification-container {
+    margin-left:0px;
+  }
+  .notification-content-area {
+    margin-left: 0px;
+}
+}
+/*-------------------------------Pink-------------------------*/
+[data-theme="red"]
+.notification-container  {
+  background: #ecc5ec;
+}[data-theme="red"]
+.notification-card {
+  border-left: 5px solid #7a2e6f;
+}
+
+/*-------------------------------Blue-------------------------*/
+[data-theme="blue"]
+.notification-card {
+  border-left: 5px solid #382e7a;
+  
+}[data-theme="blue"] .notification-container{
+  background: rgb(186, 186, 232); 
+  height:100vh;
+}
+
+/*-------------------------------Brown---------------------------*/
+[data-theme="brown"] .notification-container{
+  background: #d9cac4;
+}
+[data-theme="brown"]
+.notification-card {
+  border-left: 5px solid #2e7a70; 
+}
+/*-------------------------------Green------------------*/
+[data-theme="green"] .notification-container {
+  background: #c6e7c8; /* Light green background */
+  border-left: 5px solid #4CAF50; /* Green border to match theme */
+}
+
+[data-theme="green"] .notification-card {
+  background-color: white;
+  border-left: 5px solid #4CAF50; /* Green border */
+}
+
+[data-theme="green"] .notification-card.read {
+  background-color: #f5f5f5; /* Light gray for read notifications */
+  border-left: 5px solid #81C784; /* Lighter green border for read */
+}
+
+[data-theme="green"] .pagination-btn {
+  background: linear-gradient(160deg, #5ccf5a, #2b4584);
+}
+[data-theme="green"] .pagination-btn:hover:not(:disabled) {
+}
+
+
+/*-------------------------------Ocean Blue Mist-------------------------*/
+[data-theme="ocean"] .notification-container {
+  background: #e8f6fc;
+  color: #1a3d5d;
+  border-left: 5px solid #4b6cb7;
+}
+
+[data-theme="ocean"] .notification-card {
+  background-color: #ffffff;
+  border-left: 5px solid #0284c7;
+  color: #1a3d5d;
+}
+
+[data-theme="ocean"] .notification-card.read {
+  background-color: #f0faff;
+  color: #94a3b8;
+  border-left-color: #7dd3fc;
+}
+
+[data-theme="ocean"] .notification-container h2 {
+  color: #0369a1;
+}
+
+[data-theme="ocean"] .notification-message {
+  color: #3b82f6;
+}
+
+[data-theme="ocean"] .pagination-btn {
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  color: white;
+}
+
+[data-theme="ocean"] .pagination-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0369a1, #0ea5e9);
+  transform: translateY(-1px);
+}
+
