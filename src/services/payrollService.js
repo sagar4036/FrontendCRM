@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000/api";
+const COMPANY_ID =
+  process.env.REACT_APP_COMPANY_ID || "b371538c-c504-11f0-9e3e-3c5282470eb6";
 const payrollService = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -17,14 +19,9 @@ payrollService.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     } else {
-      delete config.headers.Authorization; // Remove malformed header
+      delete config.headers.Authorization; 
     }
-
-    // 🔥 Add x-company-id (hardcoded or from localStorage)
-    config.headers["x-company-id"] = "0aa80c0b-0999-4d79-8980-e945b4ea700d"; // Hardcoded
-    // Or use:
-    // config.headers["x-company-id"] = localStorage.getItem("Company-Id") || "1";
-
+    config.headers["x-company-id"] = COMPANY_ID;
     return config;
   },
   (error) => Promise.reject(error)

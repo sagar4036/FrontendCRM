@@ -1,31 +1,33 @@
 import apiService from "./apiService";
 import { Navigate } from "react-router-dom";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000/api";
 
-// Shared headers
+// Common JSON Headers
 const BASE_HEADERS = {
   "Content-Type": "application/json",
-  "x-company-id": "0aa80c0b-0999-4d79-8980-e945b4ea700d",
+  "x-company-id":
+    process.env.REACT_APP_COMPANY_ID ||
+    "b371538c-c504-11f0-9e3e-3c5282470eb6",
 };
 
-/*------------------------------LOGIN (fetch)---------------------------*/
-export const loginUser = async (email, password,role) => {
+/*------------------------------ LOGIN (EXEC / ADMIN / TL) ------------------------------*/
+export const loginUser = async (email, password, role) => {
   const res = await fetch(`${API_BASE_URL}/login`, {
     method: "POST",
     headers: BASE_HEADERS,
-    body: JSON.stringify({ email, password ,role}),
+    body: JSON.stringify({ email, password, role }),
   });
 
+  const data = await res.json();
   if (!res.ok) {
-    
-
-    const err = await res.json();
-    throw new Error(err.message || "Login failed");
+    throw new Error(data.message || "Login failed");
   }
-
-  return await res.json();
+  return data;
 };
+
+/*------------------------------ MANAGER LOGIN ------------------------------*/
 export const loginManager = async (email, password) => {
   const res = await fetch(`${API_BASE_URL}/manager/login`, {
     method: "POST",
@@ -33,36 +35,14 @@ export const loginManager = async (email, password) => {
     body: JSON.stringify({ email, password }),
   });
 
+  const data = await res.json();
   if (!res.ok) {
-
-    const err = await res.json();
-    throw new Error(err.message || "Login failed");
+    throw new Error(data.message || "Login failed");
   }
-
-  return await res.json();
+  return data;
 };
 
-// ✅ Logout for manager
-export const logoutManager = async () => {
-  const token = localStorage.getItem("token"); // get token from storage
-
-  const res = await fetch(`${API_BASE_URL}/manager/logout`, {
-    method: "POST",
-    credentials: "include", // ensures cookie (like manager_token) is sent
-    headers: {
-      ...BASE_HEADERS,
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || "Logout failed");
-  }
-
-  return await res.json();
-};
-
+/*------------------------------ HR LOGIN ------------------------------*/
 export const loginHr = async (email, password) => {
   const res = await fetch(`${API_BASE_URL}/hr/login`, {
     method: "POST",
@@ -70,28 +50,45 @@ export const loginHr = async (email, password) => {
     body: JSON.stringify({ email, password }),
   });
 
+  const data = await res.json();
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || "Login failed");
+    throw new Error(data.message || "Login failed");
   }
-
-  return await res.json();
+  return data;
 };
+
+/*------------------------------ MANAGER LOGOUT ------------------------------*/
+export const logoutManager = async () => {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`${API_BASE_URL}/manager/logout`, {
+    method: "POST",
+    headers: {
+      ...BASE_HEADERS,
+      Authorization: `Bearer ${token}`,
+    },
+    credentials: "include",
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Logout failed");
+  return data;
+};
+
+/*------------------------------ HR LOGOUT ------------------------------*/
 export const logoutHr = async () => {
   const res = await fetch(`${API_BASE_URL}/hr/logout`, {
     method: "POST",
-    credentials: "include", // ensures cookie (manager_token) is sent
     headers: BASE_HEADERS,
+    credentials: "include",
   });
 
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || "Logout failed");
-  }
-
-  return await res.json();
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Logout failed");
+  return data;
 };
-/*------------------------------SIGNUP (fetch)---------------------------*/
+
+/*------------------------------ SIGNUP ------------------------------*/
 export const signupUser = async (username, email, password, role) => {
   const res = await fetch(`${API_BASE_URL}/signup`, {
     method: "POST",
@@ -99,113 +96,83 @@ export const signupUser = async (username, email, password, role) => {
     body: JSON.stringify({ username, email, password, role }),
   });
 
-  const errorBody = await res.json();
-  if (!res.ok) {
-    console.error("Signup API error details:", errorBody);
-    throw new Error(errorBody.message || "Signup failed");
-  }
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Signup failed");
 
-  return errorBody;
+  return data;
 };
 
-/*------------------------------FORGOT PASSWORD---------------------------*/
+/*------------------------------ FORGOT PASSWORD ------------------------------*/
 export const forgotPassword = async (email) => {
   try {
-    const response = await apiService.post(
-      "/forgot-password",
-      { email },
-      { headers: BASE_HEADERS }
-    );
-    return response.data;
+    const res = await apiService.post("/forgot-password", { email });
+    return res.data;
   } catch (error) {
-    throw new Error(error.response?.data?.error || "Failed to send reset link!");
+    throw new Error(
+      error.response?.data?.error || "Failed to send reset link!"
+    );
   }
 };
 
-/*------------------------------RESET PASSWORD---------------------------*/
+/*------------------------------ RESET PASSWORD ------------------------------*/
 export const resetPassword = async (token, newPassword) => {
   try {
-    const response = await apiService.post(
-      "/reset-password",
-      { token, newPassword },
-      { headers: BASE_HEADERS }
+    const res = await apiService.post("/reset-password", {
+      token,
+      newPassword,
+    });
+    return res.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.error || "Failed to reset password!"
     );
+  }
+};
+
+/*------------------------------ LOGOUT (EXEC/ADMIN/TL) ------------------------------*/
+export const logoutUser = async () => {
+  try {
+    // 🚀 axios instance automatically adds token — NO manual headers needed
+    const response = await apiService.post("/logout");
+
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.error || "Failed to reset password!");
+    console.error("Logout error:", error);
+    throw new Error("Logout failed");
   }
 };
 
-/*------------------------------LOGOUT---------------------------*/
-export const logoutUser = async (executiveName) => {
-  try {
-    const token = localStorage.getItem("token");
-
-    const response = await apiService.post(
-      "/logout",
-      {
-        executiveName, // Now included in the request body
-      },
-      {
-        headers: {
-          ...BASE_HEADERS,
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      }
-    );
-    return response;
-  } catch (error) {
-    console.error("Error in logoutUser:", error);
-    throw error;
-  }
-};
-
- //Add this to services/auth.js
+/*------------------------------ AUTH HELPERS ------------------------------*/
 export const isAuthenticated = () => {
-  const token = localStorage.getItem("token");
-  return Boolean(token);
+  return Boolean(localStorage.getItem("token"));
 };
 
-/*------------------------------AUTH HELPERS---------------------------*/
+/*------------------------------ PRIVATE ROUTE ------------------------------*/
 export const PrivateRoute = ({ children, allowedRoles = [] }) => {
-  const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
 
-  if (!token || !user?.role) {
-    return <Navigate to="/login" replace />;
-  }
+  if (!token || !user?.role) return <Navigate to="/login" replace />;
 
   const role = user.role.toLowerCase();
 
   if (!allowedRoles.includes(role)) {
-    const fallback = `/${role}`; // e.g., /manager
-    return <Navigate to={fallback} replace />;
+    return <Navigate to={`/${role}`} replace />;
   }
 
   return children;
 };
-/*-------------------------------PUBLIC ROUTES-----------------*/
+
+/*------------------------------ PUBLIC ROUTE ------------------------------*/
 export const PublicRoute = ({ children }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
 
   const currentPath = window.location.pathname;
 
-  // If no token, allow access to public routes
   if (!token || !user?.role) return children;
 
-  const role = user.role;
+  const role = user.role.toLowerCase();
 
-  // Prevent role-based access to wrong route
-  if (role === "admin" && !currentPath.startsWith("/admin")) {
-    return <Navigate to="/admin" replace />;
-  }
-
-  if (role === "executive" && !currentPath.startsWith("/executive")) {
-    return <Navigate to="/executive" replace />;
-  }
-
-  // If the current path already matches the role, block public route access
-  return <Navigate to={currentPath} replace />;
+  return <Navigate to={`/${role}`} replace />;
 };

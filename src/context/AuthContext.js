@@ -368,28 +368,32 @@ if (role === "hr") navigate("/hr");
   // -----------------------
   // LOGOUT
   // -----------------------
-  const logout = async () => {
-    try {
+const logout = async () => {
+  try {
+    const userData = JSON.parse(localStorage.getItem("user") || '{}');
+    
+    // Skip executive-specific work recording for non-Executive roles
+    if (userData.role === 'Executive') {
       await recordStopWork();
-
-      // Clear localStorage and session data
-      localStorage.removeItem("workStartTime");
-      localStorage.removeItem("breakStartTime");
-      localStorage.removeItem("accumulatedBreakTime");
-     
-     await authService.logoutUser();
-     
-     localStorage.removeItem("token");
-     localStorage.removeItem("user");
-     localStorage.removeItem("executiveId");
-
-      setUser(null);
-      navigate("/login");
-    } catch (error) {
-      console.error("Logout failed:", error.message);
     }
-  };
 
+    // Clear localStorage and session data
+    localStorage.removeItem("workStartTime");
+    localStorage.removeItem("breakStartTime");
+    localStorage.removeItem("accumulatedBreakTime");
+    
+    await authService.logoutUser();
+    
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("executiveId");
+
+    setUser(null);
+    navigate("/login");
+  } catch (error) {
+    console.error("Logout failed:", error.message);
+  }
+};
   // -----------------------
   // FORGOT PASSWORD
   // -----------------------

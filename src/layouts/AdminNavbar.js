@@ -1,4 +1,3 @@
-
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useApi } from "../context/ApiContext";
@@ -16,9 +15,11 @@ import {
 
 function AdminNavbar() {
   const [showPopover, setShowPopover] = useState(false);
-  const [isLoggingOut, setIsLoggingOut] = useState(false); // <-- NEW STATE
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
   const { logout } = useAuth();
   const { changeTheme, theme } = useContext(ThemeContext);
+
   const {
     adminProfile,
     loading,
@@ -31,34 +32,36 @@ function AdminNavbar() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const localStorageUser = JSON.parse(localStorage.getItem("user"));
+
   const hoverTimeout = useRef(null);
   const isHovering = useRef(false);
   const badgeRef = useRef(null);
 
+  const localStorageUser = JSON.parse(localStorage.getItem("user"));
+
+  // ✅ FIXED: Fetch notifications only ONCE (no infinite loop)
   useEffect(() => {
-    if (
-      localStorageUser?.id &&
-      localStorageUser?.role &&
-      notifications.length === 0
-    ) {
+    if (!localStorageUser) return;
+
+    if (notifications.length === 0) {
       fetchNotifications({
         userId: localStorageUser.id,
         userRole: localStorageUser.role,
       });
     }
-}, [fetchNotifications, localStorageUser.id, localStorageUser.role, notifications]);
+  }, []); // EMPTY ARRAY → Runs only once
 
-
+  // Bounce animation for badge
   useEffect(() => {
     if (unreadCount > 0 && badgeRef.current) {
       badgeRef.current.classList.add("bounce");
       const timer = setTimeout(() => {
         badgeRef.current.classList.remove("bounce");
       }, 600);
+
       return () => clearTimeout(timer);
     }
-  }, [location.pathname,unreadCount]);
+  }, [location.pathname, unreadCount]);
 
   const handleMouseEnter = async () => {
     clearTimeout(hoverTimeout.current);
@@ -106,12 +109,12 @@ function AdminNavbar() {
           {isLight ? <FaMoon /> : <FaSun />}
         </button>
 
-        <div
-          className="admin-icons-group" 
-        >
+        <div className="admin-icons-group">
           <div className="icon-wrapper icon-comment">
-            <FaComment size={20}
-            onClick={() => navigate("/admin/messaging")} />
+            <FaComment
+              size={20}
+              onClick={() => navigate("/admin/messaging")}
+            />
           </div>
 
           <div
@@ -120,7 +123,8 @@ function AdminNavbar() {
             onClick={() => navigate("/admin/notification")}
           >
             <FaBell size={20} />
-            {unreadCount + unreadMeetingsCount > 0 && (
+
+            {(unreadCount + unreadMeetingsCount > 0) && (
               <span
                 key={location.key}
                 ref={badgeRef}
@@ -162,6 +166,7 @@ function AdminNavbar() {
                   </div>
                 )
               )}
+
               <button
                 className="logout_btn"
                 onClick={handleLogout}

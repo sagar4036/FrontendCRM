@@ -1,23 +1,26 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-const BASE_HEADERS = {
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000/api";
+const COMPANY_ID =
+  process.env.REACT_APP_COMPANY_ID || "b371538c-c504-11f0-9e3e-3c5282470eb6";
+  
+  const BASE_HEADERS = {
   "Content-Type": "application/json",
-  "x-company-id": "0aa80c0b-0999-4d79-8980-e945b4ea700d",
+  "x-company-id": COMPANY_ID,
 };
 
 
-// ✅ Dynamic headers with token
 const getHeaders = () => {
   const token = localStorage.getItem("token");
   if (!token) throw new Error("Token not found in localStorage");
 
   return {
-    "Content-Type": "application/json",
-    "x-company-id": "0aa80c0b-0999-4d79-8980-e945b4ea700d",
+    ...BASE_HEADERS,
     Authorization: `Bearer ${token}`,
   };
 };
+
 
 // ✅ POST - Create
 export const createCustomerStages = async (stageData) => {
@@ -180,23 +183,17 @@ export const getCustomerStagesById = async (customerId) => {
     throw error;
   }
 };
-export const  uploadCustomerDocuments= async (formData) => {
-  const token = localStorage.getItem('token');
-const res = await fetch(`${API_BASE_URL}/customer/document/upload`,{
-method: "POST",
-headers: {
-  // "Content-Type": "multipart/formData",
-     "x-company-id": "0aa80c0b-0999-4d79-8980-e945b4ea700d",
-       Authorization: `Bearer ${token}`,
-},
-credentials: "include",
-body: formData,
-});
-
-const data = await res.json();
-if (!res.ok) throw new Error(data.error || "Failed to create customer stages");
-return data;
-};
+      export const  uploadCustomerDocuments= async (formData) => {
+      const res = await fetch(`${API_BASE_URL}/customer/document/upload`,{
+      method: "POST",
+      headers: getHeaders(),
+      credentials: "include",
+      body: formData,
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to create customer stages");
+      return data;
+      };
 
 export const getCustomerDocuments = async (userType,id) => {
 const res = await fetch(`${API_BASE_URL}/customer/document/${userType}/${id}`, {
@@ -230,25 +227,18 @@ export const getProcessSettings = async () => {
   }
 };
 export const createProcessFollowUpApi = async (payload) => {
- 
   try {
-     console.log(payload)
-      const token = localStorage.getItem("token");
     const response = await fetch(`${API_BASE_URL}/process-history/process-followup/create`,{
-method: "POST",
-headers: {
-  "Content-Type": "application/json",
-     "x-company-id": "0aa80c0b-0999-4d79-8980-e945b4ea700d",
-       Authorization: `Bearer ${token}`,
-},
-credentials: "include",
-   body: JSON.stringify(payload)  
-});
-    return response.data;
-  } catch (error) {
-    throw error.response ? error.response.data : { message: 'Network error' };
-  }
-};
+      method: "POST",
+      headers: getHeaders(),
+      credentials: "include",
+        body: JSON.stringify(payload)  
+      });
+          return response.data;
+        } catch (error) {
+          throw error.response ? error.response.data : { message: 'Network error' };
+        }
+      };
 export const addStageCommentAndNotify = async ( customerId, stageNumber, newComment ) => {
   const response = await fetch(`${API_BASE_URL}/customer-stages/stage-comment/notify`, {
     method: "POST",

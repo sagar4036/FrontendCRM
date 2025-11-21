@@ -1,13 +1,14 @@
-// src/services/MasterUser.js
 import axios from "axios";
-// ✅ Create Axios instance specific to master user authentication
-console.log("ENV:", process.env.REACT_APP_API_BASE_URL); // ⬅️ should print correct URL
-const authApi = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL, // Replace with env var in production
+
+const COMPANY_ID =
+  process.env.REACT_APP_COMPANY_ID || "b371538c-c504-11f0-9e3e-3c5282470eb6";
+  
+  const authApi = axios.create({
+  baseURL: process.env.REACT_APP_API_BASE_URL || "http://localhost:5000/api",
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, // ⬅️ Required if backend sets httpOnly cookies
+  withCredentials: true, 
 });
 
 /**
@@ -16,7 +17,6 @@ const authApi = axios.create({
  */
 export const signupMasterUser = async (userData) => {
   try {
-    console.log("Calling signup with baseURL:", authApi.defaults.baseURL); // 🟢 Debug line
     const response = await authApi.post("/masteruser/signup", userData);
     return response.data;
   } catch (error) {
@@ -49,7 +49,7 @@ export const logoutMasterUser = async () => {
       {},
       {
         headers: {
-          'x-company-id': "0aa80c0b-0999-4d79-8980-e945b4ea700d",
+          'x-company-id': COMPANY_ID,
           Authorization: `Bearer ${token}`, // ✅ Securely attached token
         },
       }
@@ -68,4 +68,3 @@ export const logoutMasterUser = async () => {
 //   // If already logged in, redirect to actual dashboard URL
 //   return masterToken ? <Navigate to="/dashboard" replace /> : children;
 // };
-

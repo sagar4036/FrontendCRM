@@ -207,6 +207,7 @@ const fetchExecutives = useCallback(async () => {
     () => notifications.filter(n => !n.is_read).length,
     [notifications]
   );
+  
   const fetchNotifications = useCallback(async ({ userId, userRole }) => {
     if (!userId || !userRole) {
       console.warn(
@@ -296,12 +297,6 @@ const getExecutiveActivity = useCallback(async (executiveId) => {
       breakTime: totalBreakTime,
       workTime: totalWorkTime,
       callTime: totalCallTime,
-    });
-
-    console.log('✅ Activity totals for today:', {
-      totalWorkTime,
-      totalBreakTime,
-      totalCallTime
     });
 
   } catch (error) {
@@ -596,10 +591,10 @@ const fetchAllCloseLeadsAPI = useCallback(async () => {
  const [executiveDashboardData, setExecutiveDashboardData] = useState([]);
  const [executiveDashboardLoading, setExecutiveDashboardLoading] = useState(false);
 
-  const fetchExecutiveDashboardData = async () => {
+  const fetchExecutiveDashboardData = useCallback(async () => {
     setExecutiveDashboardLoading(true);
     try {
-      const data = await apiService.fetchAdminExecutiveDashboard(); // already defined in your services
+      const data = await apiService.fetchAdminExecutiveDashboard();
       setExecutiveDashboardData(data || []);
       return data || [];
     } catch (error) {
@@ -608,7 +603,8 @@ const fetchAllCloseLeadsAPI = useCallback(async () => {
     } finally {
       setExecutiveDashboardLoading(false);
     }
-  };
+  }, []);
+
 const [opportunities, setOpportunities] = useState([]);
 const [opportunitiesLoading, setOpportunitiesLoading] = useState(false);
 
@@ -626,35 +622,37 @@ const [opportunitiesLoading, setOpportunitiesLoading] = useState(false);
 
  const [dealFunnel, setDealFunnel] = useState(null);
  
-  const getDealFunnel = async () => {
+  const getDealFunnel = useCallback(async () => {
     try {
       setLoading(true);
       const data = await apiService.fetchDealFunnelData();
       setDealFunnel(data);
+      return data; // important for consumers like DealFunnel
     } catch (error) {
       console.error("❌ Context error fetching deal funnel:", error);
+      return null;
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   // ✅ Revenue Chart Data State
-const [revenueChartData, setRevenueChartData] = useState([]);
-const [revenueChartLoading, setRevenueChartLoading] = useState(false);
+// const [revenueChartData, setRevenueChartData] = useState([]);
+// const [revenueChartLoading, setRevenueChartLoading] = useState(false);
 
-const fetchRevenueChartDataAPI = async () => {
-  setRevenueChartLoading(true);
-  try {
-    const data = await apiService.fetchRevenueChartData();
-    setRevenueChartData(data || []);
-    return data || [];
-  } catch (error) {
-    console.error("❌ Error fetching revenue chart data:", error);
-    return [];
-  } finally {
-    setRevenueChartLoading(false);
-  }
-};
+// const fetchRevenueChartDataAPI = async () => {
+//   setRevenueChartLoading(true);
+//   try {
+//     const data = await apiService.fetchRevenueChartData();
+//     setRevenueChartData(data || []);
+//     return data || [];
+//   } catch (error) {
+//     console.error("❌ Error fetching revenue chart data:", error);
+//     return [];
+//   } finally {
+//     setRevenueChartLoading(false);
+//   }
+// };
 
 // Add updateUserLoginStatus to ApiContext
 const updateUserLoginStatus = async (userId, canLogin) => {
@@ -821,11 +819,12 @@ const fetchFollowUpClientsAPI = async () => {
 };
 const [allClientsLoading, setallClientsLoading] = useState(false);
 const[allClients,setAllClients]=useState();
-  const fetchAllClients= async () => {
+
+  const fetchAllClients = useCallback(async () => {
     setallClientsLoading(true);
     try {
-      const data = await apiService.fetchAllClientLeads(); // already defined in your services
-      setAllClients(data|| [])
+      const data = await apiService.fetchAllClientLeads();
+      setAllClients(data || []);
       return data || [];
     } catch (error) {
       console.error("❌ Error fetching executive dashboard data:", error);
@@ -833,7 +832,8 @@ const[allClients,setAllClients]=useState();
     } finally {
       setallClientsLoading(false);
     }
-  };
+  }, []);
+
   
 const createSingleLeadAPI = async (leadData) => {
   if (!leadData || !leadData.name) {
@@ -878,6 +878,7 @@ const createTeamLead = async (teamData) => {
     setLoading(false);
   }
 };
+
 const createAdmin = async (adminData) => {
   setLoading(true);
   
@@ -891,6 +892,7 @@ const createAdmin = async (adminData) => {
     setLoading(false);
   }
 };
+
 const createManager = async (managerData) => {
   setLoading(true);
   
@@ -974,35 +976,35 @@ const updateManagerProfile = async (managerId, profileData) => {
   } finally {
     setManagerLoading(false);
   }
-};
-const fetchAllExecutiveActivitiesByDateAPI = async () => {
-  setExecutiveDashboardLoading(true);
-  try {
-    const data = await apiService.fetchAllExecutiveActivitiesByDate();
+};  
 
-    const wrapped = { dailyActivities: data || {} }; // ✅ wrap in expected format
+const fetchAllExecutiveActivitiesByDateAPI = useCallback(async () => {
+    setExecutiveDashboardLoading(true);
+    try {
+      const data = await apiService.fetchAllExecutiveActivitiesByDate();
 
-    setExecutiveDashboardData((prev) => ({
-      ...prev,
-      ...wrapped,
-    }));
+      const wrapped = { dailyActivities: data || {} }; // Wrap in expected format
 
-    return wrapped; // ✅ return in correct structure
-  } catch (error) {
-    console.error("❌ Error fetching all executive activities by date:", error);
-    const empty = { dailyActivities: {} };
+      setExecutiveDashboardData((prev) => ({
+        ...prev,
+        ...wrapped,
+      }));
 
-    setExecutiveDashboardData((prev) => ({
-      ...prev,
-      ...empty,
-    }));
+      return wrapped; // Return in correct structure
+    } catch (error) {
+      console.error("❌ Error fetching all executive activities by date:", error);
+      const empty = { dailyActivities: {} };
 
-    return empty;
-  } finally {
-    setExecutiveDashboardLoading(false);
-  }
-};
+      setExecutiveDashboardData((prev) => ({
+        ...prev,
+        ...empty,
+      }));
 
+      return empty;
+    } finally {
+      setExecutiveDashboardLoading(false);
+    }
+  }, []); 
 const getAllProfile = async () => {
   try {
     const response = await apiService.getUserProfile(); 
@@ -1108,19 +1110,19 @@ const [emailTemplates, setEmailTemplates] = useState([]);
   const [leaveApplicationsLoading, setLeaveApplicationsLoading] = useState(false);
 
   // New function to fetch leave applications
-const fetchLeaveApplicationsAPI = useCallback(async (employeeId = null) => {
-  setLeaveApplicationsLoading(true);
-  try {
-    const data = await apiService.fetchLeaveApplications(employeeId);
-    setLeaveApplications(data);
-    return data;
-  } catch (error) {
-    console.error("❌ Error fetching leave applications:", error);
-    return [];
-  } finally {
-    setLeaveApplicationsLoading(false);
-  }
-}, []);
+  const fetchLeaveApplicationsAPI = useCallback(async (employeeId = null) => {
+    setLeaveApplicationsLoading(true);
+    try {
+      const data = await apiService.fetchLeaveApplications(employeeId);
+      setLeaveApplications(data);
+      return data;
+    } catch (error) {
+      console.error("❌ Error fetching leave applications:", error);
+      return [];
+    } finally {
+      setLeaveApplicationsLoading(false);
+    }
+  }, []);
 
   const updateLeaveStatusAPI = async (leaveId, status, hrComment = '') => {
     try {
@@ -1142,64 +1144,65 @@ const fetchLeaveApplicationsAPI = useCallback(async (employeeId = null) => {
   
   const [allProcessPersons, setAllProcessPersons] = useState([]);
   const [allProcessPersonsLoading, setAllProcessPersonsLoading] = useState(false);
-const fetchAllHRsAPI = useCallback(async () => {
-  setAllHRsLoading(true);
-  try {
-    const data = await apiService.fetchAllHRs();
-    setAllHRs(data);
-    return data;
-  } catch (error) {
-    console.error("❌ Error fetching HRs:", error);
-    return [];
-  } finally {
-    setAllHRsLoading(false);
-  }
-}, []);
+  const fetchAllHRsAPI = useCallback(async () => {
+    setAllHRsLoading(true);
+    try {
+      const data = await apiService.fetchAllHRs();
+      setAllHRs(data);
+      return data;
+    } catch (error) {
+      console.error("❌ Error fetching HRs:", error);
+      return [];
+    } finally {
+      setAllHRsLoading(false);
+    }
+  }, []);
   
 
-const fetchAllManagersAPI = useCallback(async () => {
-  setAllManagersLoading(true);
-  try {
-    const data = await apiService.fetchAllManagers();
-    setAllManagers(data);
-    return data;
-  } catch (error) {
-    console.error("❌ Error fetching Managers:", error);
-    return [];
-  } finally {
-    setAllManagersLoading(false);
-  }
-}, []);
+  const fetchAllManagersAPI = useCallback(async () => {
+    setAllManagersLoading(true);
+    try {
+      const data = await apiService.fetchAllManagers();
+      setAllManagers(data);
+      return data;
+    } catch (error) {
+      console.error("❌ Error fetching Managers:", error);
+      return [];
+    } finally {
+      setAllManagersLoading(false);
+    }
+  }, []);
 
   
-const fetchAllProcessPersonsAPI = useCallback(async () => {
-  setAllProcessPersonsLoading(true);
-  try {
-    const data = await apiService.fetchAllProcessPersons();
-    setAllProcessPersons(data);
-    return data;
-  } catch (error) {
-    console.error("❌ Error fetching Process Persons:", error);
-    return [];
-  } finally {
-    setAllProcessPersonsLoading(false);
-  }
-}, []);
+  const fetchAllProcessPersonsAPI = useCallback(async () => {
+    setAllProcessPersonsLoading(true);
+    try {
+      const data = await apiService.fetchAllProcessPersons();
+      setAllProcessPersons(data);
+      return data;
+    } catch (error) {
+      console.error("❌ Error fetching Process Persons:", error);
+      return [];
+    } finally {
+      setAllProcessPersonsLoading(false);
+    }
+  }, []);
+
   const [allTeamLeads, setAllTeamLeads] = useState([]);
   const [allTeamLeadsLoading, setAllTeamLeadsLoading] = useState(false);
-const fetchAllTeamLeadsAPI = useCallback(async () => {
-  setAllTeamLeadsLoading(true);
-  try {
-    const data = await apiService.fetchAllTeamLeads();
-    setAllTeamLeads(data);
-    return data;
-  } catch (error) {
-    console.error("❌ Error fetching Team Leads:", error);
-    return [];
-  } finally {
-    setAllTeamLeadsLoading(false);
-  }
-}, []);
+  const fetchAllTeamLeadsAPI = useCallback(async () => {
+    setAllTeamLeadsLoading(true);
+    try {
+      const data = await apiService.fetchAllTeamLeads();
+      setAllTeamLeads(data);
+      return data;
+    } catch (error) {
+      console.error("❌ Error fetching Team Leads:", error);
+      return [];
+    } finally {
+      setAllTeamLeadsLoading(false);
+    }
+  }, []);
     
   const [managerTeams, setManagerTeams] = useState([]);
   const [managerTeamsLoading, setManagerTeamsLoading] = useState(false);
@@ -1234,7 +1237,6 @@ const fetchManagerTeams = useCallback(async (managerId) => {
 
   try {
     const teams = await getManagerTeamsById(managerId);
-    console.log("✅ Fetched manager teams from API:", teams);
 
     if (Array.isArray(teams)) {
       setManagerTeams(teams);
@@ -1488,7 +1490,6 @@ const [isUserProfileUpdating, setUserProfileUpdating] = useState(false);
     try {
       const updatedData = await updateUserProfile(userId, profileData);
       
-      // Update user state if the updated user is the current user
       const currentUser = JSON.parse(localStorage.getItem("user"));
       if (currentUser?.id === parseInt(userId)) {
         const updatedUser = {
@@ -1505,10 +1506,8 @@ const [isUserProfileUpdating, setUserProfileUpdating] = useState(false);
           profile_picture: updatedData.user?.profile_picture || currentUser.profile_picture,
         };
         
-        // Update localStorage
         localStorage.setItem("user", JSON.stringify(updatedUser));
         
-        // Update context state
         setUser(updatedUser);
       }
       
@@ -1520,8 +1519,8 @@ const [isUserProfileUpdating, setUserProfileUpdating] = useState(false);
       setUserProfileUpdating(false);
     }
   };
-// ✅ Schedule Follow-Up Notification
-const scheduleFollowUpNotificationAPI = async ({ userId, clientName, date, time, targetRole = "executive" }) => {
+
+  const scheduleFollowUpNotificationAPI = async ({ userId, clientName, date, time, targetRole = "executive" }) => {
   try {
     const response = await apiService.scheduleFollowUpNotification({
       userId,
@@ -1538,16 +1537,12 @@ const scheduleFollowUpNotificationAPI = async ({ userId, clientName, date, time,
 };
 
 
-const [refreshDashboard, setRefreshDashboard] = useState(false);
+  const [refreshDashboard, setRefreshDashboard] = useState(false);
 
-const triggerDashboardRefresh = () => {
-  setRefreshDashboard((prev) => !prev); ;
-};
+  const triggerDashboardRefresh = () => {
+    setRefreshDashboard((prev) => !prev); ;
+  };
 
-
-
-
-  // ✅ Effect to fetch initial data
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem("user"));
     if (!currentUser?.role) return;
@@ -1560,16 +1555,15 @@ const triggerDashboardRefresh = () => {
     }
   
     fetchExecutiveData();
-    fetchOnlineExecutivesData();
     fetchLeadSectionVisitsAPI();
     fetchExecutives();
     fetchAllCloseLeadsAPI();
     getExecutiveActivity();
     fetchFollowUpHistoriesAPI();
   
-if (currentUser?.id) {
-      fetchNotifications(currentUser.id);
-    }
+ if (currentUser?.id && currentUser?.role) {  // Added role check for safety
+    fetchNotifications({ userId: currentUser.id, userRole: currentUser.role });
+  }
   }, [fetchNotifications,
   fetchExecutives,
   fetchFollowUpHistoriesAPI,
@@ -1588,14 +1582,14 @@ if (currentUser?.id) {
     const token = localStorage.getItem("token");
   
     if (token && currentUser?.username) {
-      getAllFollowUps();    // ✅ moved here safely
+      getAllFollowUps();    
       fetchFreshLeadsAPI();
     } else {
       console.warn("⛔ Token or user info missing. Skipping follow-up fetch.");
     }
   }, [fetchFreshLeadsAPI,getAllFollowUps]);
 
-  // ✅ API Functions
+  // API Functions
   const apiFunctions = {
     // Leads
     fetchLeadsAPI: apiService.fetchLeadsAPI,
@@ -1603,8 +1597,8 @@ if (currentUser?.id) {
     assignLeadAPI: apiService.assignLeadAPI,
     reassignLead:apiService.reassignLead,
     // Executives
-    fetchExecutiveActivity: apiService.fetchExecutiveActivity, // Added
-    fetchAllExecutivesActivities: apiService.fetchAllExecutivesActivities, // Added
+    fetchExecutiveActivity: apiService.fetchExecutiveActivity, 
+    fetchAllExecutivesActivities: apiService.fetchAllExecutivesActivities, 
     fetchAllExecutiveActivitiesByDateAPI,
     fetchExecutivesAPI: apiService.fetchExecutivesAPI,
     fetchExecutiveInfo: apiService.fetchExecutiveInfo,
@@ -1614,6 +1608,7 @@ if (currentUser?.id) {
     fetchConvertedByExecutive,
     fetchClosedByExecutive,
     fetchFollowUpsByExecutive,
+    fetchAllClients,
     // Follow-ups
     fetchCallTimeByRangeAPI,
     createFollowUp,
@@ -1631,18 +1626,18 @@ if (currentUser?.id) {
     fetchFollowUpHistoriesAPI,
     fetchExecutiveSummaryByRangeAPI,
     // Meetings
- createMeetingAPI: apiService.createMeetingAPI, 
- fetchMeetings:    apiService.fetchMeetings,
- toggleManagerLoginAccess,
-        toggleHrLoginAccess,
-        toggleProcessPersonLoginAccess,
-        toggleTlLoginAccess,
- meetings,
- refreshMeetings,
- fetchDealFunnelData: apiService.fetchDealFunnelData,
+    createMeetingAPI: apiService.createMeetingAPI, 
+    fetchMeetings:    apiService.fetchMeetings,
+    toggleManagerLoginAccess,
+    toggleHrLoginAccess,
+    toggleProcessPersonLoginAccess,
+    toggleTlLoginAccess,
+    meetings,
+    refreshMeetings,
+    fetchDealFunnelData: apiService.fetchDealFunnelData,
 
- createLeaveApplication,
- // New leave application functions
+    createLeaveApplication,
+   // New leave application functions
    fetchLeaveApplicationsAPI,
    updateLeaveStatusAPI,
   };
@@ -1663,29 +1658,29 @@ if (currentUser?.id) {
         fetchTeamMembersById,
         readMeetings,
         fetchHrUserData,
-       updateHrProfileById,
+        updateHrProfileById,
         markMeetingAsRead,
         fetchExecutiveData,
         meetingsLoading,
         createFreshLeadAPI,
         createLeadAPI,
         allTeamLeads,
-allTeamLeadsLoading,
-fetchAllTeamLeadsAPI,
-getAllConverted,
-summaryLoading,
+        allTeamLeadsLoading,
+        fetchAllTeamLeadsAPI,
+        getAllConverted,
+        summaryLoading,
         updateFreshLeadFollowUp,
         executiveDashboardData,
         executiveDashboardLoading,
         fetchExecutiveDashboardData,
         adminMeeting,
-        convertedCustomerCount, // ✅ add this
-    setConvertedCustomerCount, // ✅ and this
-    createManager,
-    updateClientLeadsadmin,
-    deleteClientLead,
-    getAllProfile,
-    managerProfile,
+        convertedCustomerCount, 
+        setConvertedCustomerCount, 
+        createManager,
+        updateClientLeadsadmin,
+        deleteClientLead,
+        getAllProfile,
+        managerProfile,
         managerLoading,
         setManagerProfile,
         // ✅ Follow-ups
@@ -1695,16 +1690,16 @@ summaryLoading,
         updateFollowUp,
         fetchAllClients,
         verifyNumberAPI,
-      verificationResults,
-      verificationLoading,
-      followUpClients,
-      followUpClientsLoading,
-      fetchFollowUpClientsAPI,
-      createAdmin,
+        verificationResults,
+        verificationLoading,
+        followUpClients,
+        followUpClientsLoading,
+        fetchFollowUpClientsAPI,
+        createAdmin,
         createTeamLead,
         refreshDashboard,
-      triggerDashboardRefresh,
-        closeLeads, // Add the state for Close Leads
+        triggerDashboardRefresh,
+        closeLeads, 
         closeLeadsLoading,
         closeLeadsError,
         handleUpdateUserProfile,
@@ -1729,11 +1724,10 @@ summaryLoading,
         fetchNotifications,
         setNotifications,
         createCopyNotification,
-      markNotificationReadAPI,
+        markNotificationReadAPI,
         deleteNotificationAPI,
-        revenueChartData,
-        revenueChartLoading,
-        fetchRevenueChartDataAPI,
+        // revenueChartData,
+        // fetchRevenueChartDataAPI,
         fetchManagerTeams,
         deleteTeamById,
         // ✅ User state
@@ -1813,32 +1807,29 @@ summaryLoading,
         fetchFollowUpHistoriesAPI,
         createFollowUpHistoryAPI,
 
-              // New leave applications context
-              leaveApplications,
-              leaveApplicationsLoading,
-              fetchLeaveApplicationsAPI,
-              updateLeaveStatusAPI,
-              // HR, Manager, and Process Person Data
-              allHRs,
-              allHRsLoading,
-              fetchAllHRsAPI,
-              fetchCallTimeByRangeAPI,
-              allManagers,
-              allManagersLoading,
-              fetchAllManagersAPI,
-                getManager,
-                updateManagerProfile,
-              allProcessPersons,
-              allProcessPersonsLoading,
-              fetchAllProcessPersonsAPI,
-              allTeams,
-              allTeamsLoading,
-              allTeamsError,
-              fetchAllTeamsAPI,
-              allClients,
-  allClientsLoading,
-              
-              
+        leaveApplications,
+        leaveApplicationsLoading,
+        fetchLeaveApplicationsAPI,
+        updateLeaveStatusAPI,
+        // HR, Manager, and Process Person Data
+        allHRs,
+        allHRsLoading,
+        fetchAllHRsAPI,
+        fetchCallTimeByRangeAPI,
+        allManagers,
+        allManagersLoading,
+        fetchAllManagersAPI,
+        getManager,
+        updateManagerProfile,
+        allProcessPersons,
+        allProcessPersonsLoading,
+        fetchAllProcessPersonsAPI,
+        allTeams,
+        allTeamsLoading,
+        allTeamsError,
+        fetchAllTeamsAPI,
+        allClients,
+        allClientsLoading,   
       }}
     >
       {children}

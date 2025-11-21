@@ -1,11 +1,12 @@
 import { Navigate, useLocation } from "react-router-dom";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
-// Shared headers
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000/api";
+const COMPANY_ID =
+  process.env.REACT_APP_COMPANY_ID || "b371538c-c504-11f0-9e3e-3c5282470eb6";// Shared headers
 const BASE_HEADERS = {
   "Content-Type": "application/json",
-  "x-company-id": "0aa80c0b-0999-4d79-8980-e945b4ea700d",
+  "x-company-id": COMPANY_ID,
 };
 
 // ------------------------------LOGIN--------------------------- //

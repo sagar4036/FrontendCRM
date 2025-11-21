@@ -13,9 +13,9 @@ import { useApi } from "../../context/ApiContext";
 const RevenueChart = () => {
   const { revenueChartData, revenueChartLoading, fetchRevenueChartDataAPI } = useApi();
 
-  useEffect(() => {
-    fetchRevenueChartDataAPI();
-  }, [fetchRevenueChartDataAPI]);
+  // useEffect(() => {
+  //   fetchRevenueChartDataAPI();
+  // }, [fetchRevenueChartDataAPI]);
 
   if (revenueChartLoading) {
     return <div>Loading revenue chart data...</div>;

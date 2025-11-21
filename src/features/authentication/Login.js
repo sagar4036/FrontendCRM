@@ -14,7 +14,6 @@ const Login = ({ userType }) => {
   const [loading, setLoading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Memoize slides to prevent recreation on every render
   const slides = useMemo(
     () => [
       { text: "Fast & Secure", img: img1 },
@@ -29,7 +28,7 @@ const Login = ({ userType }) => {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [slides.length]); // Now slides.length is stable due to useMemo
+  }, [slides.length]); 
 
   const handleLogin = useCallback(
     async (e) => {
@@ -38,7 +37,6 @@ const Login = ({ userType }) => {
 
       try {
         await login(email, password, userType?.toLowerCase());
-        // Navigate after successful login if needed
         // navigate('/dashboard'); // Uncomment and adjust route as needed
       } catch (error) {
         console.error("Login failed:", error);

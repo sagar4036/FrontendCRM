@@ -7,29 +7,33 @@ import LoadingSpinner from "../spinner/LoadingSpinner";
 function Notification() {
   const {
     notifications = [],
-    setNotifications, // ✅ Added
+    setNotifications,
     notificationsLoading,
     fetchNotifications,
     markNotificationReadAPI,
-    markMultipleAsRead
+    markMultipleAsRead,
   } = useApi();
 
   const { isLoading, loadingText, showLoader, hideLoader } = useLoading();
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
-  const [readIds, setReadIds] = useState(new Set());
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [readIds, setReadIds] = useState(new Set());
+  const itemsPerPage = 8;
+
+  // ✅ Fetch notifications ONCE when page loads
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       showLoader("Loading Notifications...");
-      fetchNotifications({ userId: user.id, userRole: user.role }).finally(() => {
-        hideLoader();
-      });
+      fetchNotifications({ userId: user.id, userRole: user.role })
+        .finally(() => hideLoader());
     }
-  }, [fetchNotifications,showLoader, hideLoader]);
+  }, []); // empty array prevents infinite API calls
 
-  // Group lead assignment notifications
+  // -------------------------
+  // GROUP LEAD ASSIGNMENT LOGIC
+  // -------------------------
+
   const groupedLeadAssignments = [];
   const otherNotifications = [];
 
@@ -74,15 +78,20 @@ function Notification() {
     });
   });
 
-  const finalNotificationList = [...groupedLeadAssignments, ...otherNotifications].sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
+  const finalNotificationList = [
+    ...groupedLeadAssignments,
+    ...otherNotifications,
+  ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const totalPages = Math.ceil(finalNotificationList.length / itemsPerPage);
   const currentNotifications = finalNotificationList.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  // -------------------------
+  // MARK AS READ FUNCTION
+  // -------------------------
 
   const handleMarkAsRead = async (notification) => {
     const newReadIds = new Set(readIds);
@@ -120,10 +129,11 @@ function Notification() {
 
     setReadIds(newReadIds);
 
-    // ✅ Update notification list locally (optimistic update)
+    // Optimistic UI update
     const updatedNotifications = notifications.map((n) => {
       if (
-        (notification.type === "grouped-leads" && notification.originalIds.includes(n.id)) ||
+        (notification.type === "grouped-leads" &&
+          notification.originalIds.includes(n.id)) ||
         (!notification.type && n.id === notification.id)
       ) {
         return { ...n, is_read: true };
@@ -131,8 +141,12 @@ function Notification() {
       return n;
     });
 
-    setNotifications(updatedNotifications); // ✅ This must be called AFTER updatedNotifications is defined
+    setNotifications(updatedNotifications);
   };
+
+  // -------------------------
+  // PAGINATION
+  // -------------------------
 
   const handlePrevPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -142,9 +156,16 @@ function Notification() {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
+  // -------------------------
+  // UI RENDER
+  // -------------------------
+
   return (
     <div className="notification-container" style={{ position: "relative" }}>
-      {isLoading && <LoadingSpinner text={loadingText || "Loading Notifications..."} />}
+      {isLoading && (
+        <LoadingSpinner text={loadingText || "Loading Notifications..."} />
+      )}
+
       <h2>Notifications</h2>
 
       {notificationsLoading ? (
@@ -164,13 +185,13 @@ function Notification() {
                   className={`notification-card ${n.is_read ? "read" : ""}`}
                 >
                   <div className="notification-header">
-                    <strong>
-                      {isGrouped ? n.message : title?.trim()}
-                    </strong>
+                    <strong>{isGrouped ? n.message : title?.trim()}</strong>
+
                     <div className="notification-meta">
                       <span className="notification-time">
                         {new Date(n.createdAt).toLocaleTimeString()}
                       </span>
+
                       <label className="read-checkbox">
                         <input
                           type="checkbox"
@@ -188,7 +209,9 @@ function Notification() {
                       Count: {n.count}
                     </p>
                   ) : (
-                    <p className="notification-message">{messageBody?.trim()}</p>
+                    <p className="notification-message">
+                      {messageBody?.trim()}
+                    </p>
                   )}
                 </li>
               );
@@ -203,9 +226,11 @@ function Notification() {
             >
               Prev
             </button>
+
             <span>
               Page {currentPage} of {totalPages}
             </span>
+
             <button
               className="pagination-btn"
               onClick={handleNextPage}
@@ -221,4 +246,3 @@ function Notification() {
 }
 
 export default Notification;
-       

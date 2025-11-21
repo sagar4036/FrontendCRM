@@ -1,5 +1,9 @@
 import axios from "axios";
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000/api";
+
+const COMPANY_ID =
+  process.env.REACT_APP_COMPANY_ID || "b371538c-c504-11f0-9e3e-3c5282470eb6";
 
 const apiService = axios.create({
   baseURL: API_BASE_URL,
@@ -9,18 +13,15 @@ const apiService = axios.create({
   },
 });
 
-// ✅ Automatically attach token to requests (if available)
 apiService.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); // ONLY executive/admin token
+    const token = localStorage.getItem("token"); 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     } else {
-      delete config.headers.Authorization; // Remove malformed header
+      delete config.headers.Authorization; 
     }    
-    // 🔥 Add x-company-id (hardcoded or from localStorage)
-    config.headers["x-company-id"] = "0aa80c0b-0999-4d79-8980-e945b4ea700d"; // Hardcoded
-  
+    config.headers["x-company-id"] = COMPANY_ID;  
     return config;
   },
   (error) => Promise.reject(error)
@@ -73,7 +74,7 @@ export const toggleTeamLeadLoginAccess = async (userId, can_login) => {
 export const fetchLeadsAPI = async (limit = 10, offset = 0) => {
   try {
     const response = await apiService.get(`/client-leads/getClients?limit=${limit}&offset=${offset}`);
-    return response.data; // Return the full response (including leads and pagination metadata)
+    return response.data; 
   } catch (error) {
     console.error("❌ Error fetching leads:", error);
     throw error;
@@ -237,7 +238,7 @@ export const assignLeadAPI = async (leadId, executiveName) => {
 // ✅ Fetch all executive activities
 export const fetchAllExecutivesActivities = async () => {
   try {
-    const response = await apiService.get("/executive-activities");
+    const response = await apiService.get("/executive-activities/all-activities");
     return response.data;
   } catch (error) {
     console.error("❌ Error fetching all executive activities:", error);
@@ -250,10 +251,7 @@ export const fetchExecutiveActivity = async (executiveId) => {
   try {
     const response = await apiService.get(
       `/executive-activities/${executiveId}`
-    );
-    
-    console.log('✅ API Response:', response.data);
-    
+    );    
     return response.data;
   } catch (error) {
     console.error(
@@ -519,7 +517,7 @@ export const adminMeeting = async () => {
 export const fetchAdminExecutiveDashboard = async () => {
   try {
     const response = await apiService.get("/executive-activities/adminDashboard");
-    return response.data.executives; // returns array of executives with activity data
+    return response.data.executives; 
   } catch (error) {
     console.error("❌ Error fetching admin executive dashboard data:", error);
     throw error;
@@ -527,15 +525,15 @@ export const fetchAdminExecutiveDashboard = async () => {
 };
 
 // ✅ Fetch revenue chart data
-export const fetchRevenueChartData = async () => {
-  try {
-    const response = await apiService.get("/revenue/revenue-data");
-    return response.data;
-  } catch (error) {
-    console.error("❌ Error fetching revenue chart data:", error);
-    throw error;
-  }
-};
+// export const fetchRevenueChartData = async () => {
+//   try {
+//     const response = await apiService.get("/revenue/revenue-data");
+//     return response.data;
+//   } catch (error) {
+//     console.error("❌ Error fetching revenue chart data:", error);
+//     throw error;
+//   }
+// };
 export const fetchDealFunnelData = async (executiveId = null) => {
   try {
     const url = executiveId
@@ -552,7 +550,7 @@ export const fetchDealFunnelData = async (executiveId = null) => {
 //Reassigned Leads 
 export const reassignLead = async (clientLeadId, newExecutive) => {
   try {
-    const response = await apiService.put(`leads/reassign`, {
+    const response = await apiService.put(`/leads/reassign`, {
       clientLeadId: Number(clientLeadId),
       newExecutive,
     });
@@ -651,9 +649,10 @@ export const sendEodReport = async ({  executiveId,executiveName,email,fields,st
   }
 };
 export const createExecutiveAPI = async (executiveData) => {
-  const response = await apiService.post("/create-executive", executiveData);
+  const response = await apiService.post("/create-exec", executiveData);
   return response.data;
 };
+
 
 
 // Add verifyExecutiveOTP function
@@ -706,7 +705,7 @@ export const createAdminApi = async (adminData) => {
 };
 export const createManagerApi = async (managerData) => {
   try {
-    const response = await apiService.post("manager/signup",managerData);
+    const response = await apiService.post("/manager/signup",managerData);
     return response.data;
   } catch (error) {
     console.error("❌ Error ", error);
@@ -715,7 +714,7 @@ export const createManagerApi = async (managerData) => {
 };
 export const createHrApi = async (hrData) => {
   try {
-    const response = await apiService.post("hr/signup",hrData);
+    const response = await apiService.post("/hr/signup",hrData);
     return response.data;
   } catch (error) {
     console.error("❌ Error ", error);
@@ -1020,8 +1019,16 @@ export const updateHrProfile = async (hrId, updateData) => {
 
 // ---- CONVERTED ----
 export const fetchConvertedByExecutive = async (execName) => {
-  const res = await apiService.get(`/converted/admin/${encodeURIComponent(execName.trim())}`);
-  return res.data.data;
+try {
+    const res = await apiService.get(`/converted/exec/${encodeURIComponent(execName.trim())}`);
+    return res.data.data || []; 
+  } catch (error) {
+    if (error.response?.status === 404 && error.response?.data?.message?.includes('No converted clients')) {
+      return [];
+    }
+    console.error(`❌ Error fetching converted clients for ${execName}:`, error.response?.data || error.message);
+    throw error;  // Propagate for upstream handling
+  }
 };
 
 export const fetchClosedByExecutive = async (execName) => {

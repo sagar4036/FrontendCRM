@@ -1,44 +1,49 @@
 // src/services/permissionService.js
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_API_BASE_URL;
-const getToken = () => localStorage.getItem("token");
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000/api";
+
+const COMPANY_ID =
+  process.env.REACT_APP_COMPANY_ID || "b371538c-c504-11f0-9e3e-3c5282470eb6";
+  
+  const getToken = () => localStorage.getItem("token");
 const getHeaders = () => ({
-  "x-company-id": "0aa80c0b-0999-4d79-8980-e945b4ea700d",
+  "x-company-id": COMPANY_ID,
   Authorization: `Bearer ${getToken()}`,
   "Content-Type": "application/json",
 });
 
 export const permissionService = {
   async fetchUsers() {
-    const res = await axios.get(`${BASE_URL}/get-managers-users`, { headers: getHeaders() });
+    const res = await axios.get(`${API_BASE_URL}/role-permissions/get-managers-users`, { headers: getHeaders() });
     return res.data;
   },
 
   async createPermission(payload) {
-    const res = await axios.post(`${BASE_URL}/create`, payload, { headers: getHeaders() });
+    const res = await axios.post(`${API_BASE_URL}/role-permissions/create`, payload, { headers: getHeaders() });
     return res.data;
   },
 
   async fetchAllRolePermissions() {
-    const res = await axios.get(`${BASE_URL}/get-permissions`, { headers: getHeaders() });
+    const res = await axios.get(`${API_BASE_URL}/role-permissions/get-permissions`, { headers: getHeaders() });
     return res.data;
   },
 
   async fetchSinglePermission(id) {
-    const res = await axios.get(`${BASE_URL}/permission/${id}`, { headers: getHeaders() });
+    const res = await axios.get(`${API_BASE_URL}/role-permissions/permission/${id}`, { headers: getHeaders() });
     return res.data;
   },
 
   async togglePermission(permissionId, permissionKey) {
-    const res = await axios.patch(`${BASE_URL}/${permissionId}/toggle`, { permissionKey }, {
+    const res = await axios.patch(`${API_BASE_URL}/role-permissions/${permissionId}/toggle`, { permissionKey }, {
       headers: getHeaders(),
     });
     return res.data;
   },
 
   async fetchPermissionsForUser(userId, role) {
-    const res = await axios.get(`${BASE_URL}/${role}/${userId}`, { headers: getHeaders() });
+    const res = await axios.get(`${API_BASE_URL}/role-permissions/${role}/${userId}`, { headers: getHeaders() });
     return res.data;
   },
 };
