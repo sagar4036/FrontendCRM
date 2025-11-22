@@ -132,7 +132,6 @@ export const resetPassword = async (token, newPassword) => {
 /*------------------------------ LOGOUT (EXEC/ADMIN/TL) ------------------------------*/
 export const logoutUser = async () => {
   try {
-    // 🚀 axios instance automatically adds token — NO manual headers needed
     const response = await apiService.post("/logout");
 
     return response.data;
@@ -147,12 +146,17 @@ export const isAuthenticated = () => {
   return Boolean(localStorage.getItem("token"));
 };
 
-/*------------------------------ PRIVATE ROUTE ------------------------------*/
+/*------------------------------ PRIVATE ROUTE (FIXED) ------------------------------*/
+
 export const PrivateRoute = ({ children, allowedRoles = [] }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
 
-  if (!token || !user?.role) return <Navigate to="/login" replace />;
+  // 🛑 FIXED: ALWAYS redirect unauthenticated users to a VALID login route
+  // earlier it was "/login" which caused Vercel blank screen
+  if (!token || !user?.role) {
+    return <Navigate to="/admin/login" replace />;
+  }
 
   const role = user.role.toLowerCase();
 
@@ -167,8 +171,6 @@ export const PrivateRoute = ({ children, allowedRoles = [] }) => {
 export const PublicRoute = ({ children }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
-
-  const currentPath = window.location.pathname;
 
   if (!token || !user?.role) return children;
 
