@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useApi } from "../../context/ApiContext";
 
-export const SendEmailToClients = ({ clientInfo, onTemplateSelect }) => {
+export const SendEmailToClients = ({ clientInfo = {}, onTemplateSelect }) => {
   const {
-    executiveInfo,
+    executiveInfo = {},
     fetchAllTemplates,
     fetchTemplateById,
     templateLoading,
   } = useApi();
+
+  // Safe defaults
+  const safeClient = {
+    name: clientInfo?.name || "",
+    email: clientInfo?.email || "",
+  };
+
+  const safeExec = {
+    email: executiveInfo?.email || "",
+  };
+
   const [selectedTemplateId, setSelectedTemplateId] = useState("");
   const [emailTemplates, setEmailTemplates] = useState([]);
 
@@ -23,39 +34,30 @@ export const SendEmailToClients = ({ clientInfo, onTemplateSelect }) => {
       }
     };
 
-    if (clientInfo?.email) {
+    if (safeClient.email) {
       loadTemplates();
     }
-  }, [clientInfo?.email, fetchAllTemplates]);
+  }, [safeClient.email, fetchAllTemplates]);
 
   const handleTemplateChange = async (e) => {
     const templateId = e.target.value;
     setSelectedTemplateId(templateId);
 
     if (!templateId) {
-      onTemplateSelect(null, clientInfo.email);
+      onTemplateSelect?.(null, safeClient.email);
       return;
     }
 
     try {
       const fullTemplate = await fetchTemplateById(templateId);
-      if (fullTemplate?.id && clientInfo.email) {
-        onTemplateSelect(fullTemplate, clientInfo.email);
-      } else {
-        console.warn(
-          "Template or client email missing:",
-          fullTemplate,
-          clientInfo.email
-        );
+
+      if (fullTemplate?.id && safeClient.email) {
+        onTemplateSelect?.(fullTemplate, safeClient.email);
       }
     } catch (err) {
       console.error("Failed to load template by ID:", err);
     }
   };
-
-  if (!clientInfo?.email) {
-    return <p>Client info not available</p>;
-  }
 
   return (
     <div>
@@ -69,12 +71,13 @@ export const SendEmailToClients = ({ clientInfo, onTemplateSelect }) => {
           flexWrap: "wrap",
         }}
       >
+        {/* FROM */}
         <div>
           <label>
             From:
             <input
               type="email"
-              value={executiveInfo.email}
+              value={safeExec.email}
               readOnly
               style={{
                 marginLeft: "0.5rem",
@@ -85,12 +88,13 @@ export const SendEmailToClients = ({ clientInfo, onTemplateSelect }) => {
           </label>
         </div>
 
+        {/* TO */}
         <div>
           <label>
             To:
             <input
               type="email"
-              value={clientInfo.email}
+              value={safeClient.email}
               readOnly
               style={{
                 marginLeft: "0.5rem",
@@ -101,6 +105,7 @@ export const SendEmailToClients = ({ clientInfo, onTemplateSelect }) => {
           </label>
         </div>
 
+        {/* TEMPLATE DROPDOWN */}
         <div>
           <label>
             Template:
@@ -109,7 +114,7 @@ export const SendEmailToClients = ({ clientInfo, onTemplateSelect }) => {
               onChange={handleTemplateChange}
               required
               style={{ marginLeft: "0.5rem" }}
-              disabled={templateLoading}
+              disabled={!safeClient.email || templateLoading}
             >
               <option value="">Select</option>
               {emailTemplates.map((template) => (

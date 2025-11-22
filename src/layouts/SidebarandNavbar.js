@@ -459,12 +459,22 @@ const SidebarandNavbar = () => {
                     <>
                       <div className="user_details">
                         <div className="user_avatar">
-                          {executiveInfo.username?.charAt(0)}
-                        </div>
-                        <div>
-                          <p className="user_name">{executiveInfo.username}</p>
-                          <p className="user_role">{executiveInfo.role}</p>
-                        </div>
+  {executiveInfo?.username?.charAt(0) || "U"}
+</div>
+
+<div>
+  <p className="user_name">
+    {executiveInfo?.username || "User"}
+  </p>
+
+  <p className="user_role">
+  {executiveInfo?.role ||
+    JSON.parse(localStorage.getItem("user"))?.role ||
+    "Executive"}
+</p>
+
+</div>
+
                       </div>
                       <button
                         className="logout_btns"

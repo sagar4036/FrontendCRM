@@ -821,18 +821,15 @@ const [allClientsLoading, setallClientsLoading] = useState(false);
 const[allClients,setAllClients]=useState();
 
   const fetchAllClients = useCallback(async () => {
-    setallClientsLoading(true);
-    try {
-      const data = await apiService.fetchAllClientLeads();
-      setAllClients(data || []);
-      return data || [];
-    } catch (error) {
-      console.error("❌ Error fetching executive dashboard data:", error);
-      return [];
-    } finally {
-      setallClientsLoading(false);
-    }
-  }, []);
+  try {
+    const data = await apiService.fetchAllClientLeads();
+    return data || [];
+  } catch (error) {
+    console.error("❌ Error fetching clients:", error);
+    return [];
+  }
+}, []);
+
 
   
 const createSingleLeadAPI = async (leadData) => {
