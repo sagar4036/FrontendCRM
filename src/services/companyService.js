@@ -1,6 +1,6 @@
 import axios from "axios";
 const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000/api";
+  process.env.REACT_APP_API_BASE_URL;
 // Create an Axios instance specific to company service
 const companyApi = axios.create({
   baseURL: API_BASE_URL, // ⚠️ Replace with env var in production
