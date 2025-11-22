@@ -88,9 +88,9 @@ export const logoutHr = async () => {
   return data;
 };
 
-/*------------------------------ SIGNUP (ADMIN) ------------------------------*/
+/*------------------------------ SIGNUP ------------------------------*/
 export const signupUser = async (username, email, password, role) => {
-  const res = await fetch(`${API_BASE_URL}/create-admin`, {
+  const res = await fetch(`${API_BASE_URL}/signup`, {
     method: "POST",
     headers: BASE_HEADERS,
     body: JSON.stringify({ username, email, password, role }),
@@ -101,7 +101,6 @@ export const signupUser = async (username, email, password, role) => {
 
   return data;
 };
-
 
 /*------------------------------ FORGOT PASSWORD ------------------------------*/
 export const forgotPassword = async (email) => {
